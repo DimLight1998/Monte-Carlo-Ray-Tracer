@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="BrmbpYsR" />
+  </component>
+  <component name="ProjectId" id="1SazdphZoSiGPbgJT3UlkN2FJTP" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Monte_Carlo_Ray_Tracer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Monte_Carlo_Ray_Tracer" TARGET_NAME="Monte_Carlo_Ray_Tracer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Monte_Carlo_Ray_Tracer" RUN_TARGET_NAME="Monte_Carlo_Ray_Tracer">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+</project>
