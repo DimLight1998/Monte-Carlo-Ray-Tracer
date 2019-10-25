@@ -37,7 +37,7 @@ class RenderingEngine {
     constexpr static Color Black = {0, 0, 0};
     constexpr static Color DEBUG_ONLY_SKY = {0.9, 1.0, 1.0};
     //    constexpr static Color DEBUG_ONLY_SKY = {0.1, 0.1, 0.1};
-    constexpr static float RayHitMin = 1e-4;
+    constexpr static float RayHitMin = 1e-3;
     constexpr static float RayHitMax = std::numeric_limits<float>::max();
 };
 

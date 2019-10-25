@@ -99,7 +99,7 @@ class Mesh : public Hitable {
     [[nodiscard]] std::unique_ptr<BVH> BuildBVH() const override {
         std::vector<std::shared_ptr<const Hitable>> triangles;
         std::for_each(_triangles.begin(), _triangles.end(),
-                      [&](const auto &triangle) { triangles.emplace_back(triangle.shared_from_this()); });
+                      [&](const auto &triangle) { triangles.emplace_back(std::make_shared<Triangle>(triangle)); });
         return BVH::BuildBVH(triangles);
     }
 

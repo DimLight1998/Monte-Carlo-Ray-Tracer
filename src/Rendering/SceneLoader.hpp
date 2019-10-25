@@ -73,14 +73,49 @@ class SceneLoader {
     LoadHitable(const std::unordered_map<std::string, std::shared_ptr<Material>> &materialMap,
                 const json &hitableJson) {
         const std::string type = hitableJson["type"];
+        const std::string materialName = hitableJson["material"];
+        const auto &material = materialMap.at(materialName);
         if (type == "sphere") {
             const auto &center = hitableJson["center"];
             const float radius = hitableJson["radius"];
-            const std::string materialName = hitableJson["material"];
-            const auto &material = materialMap.at(materialName);
             return std::make_shared<Sphere>(Location(center[0], center[1], center[2]), radius, material);
+        } else if (type == "mesh") {
+            const std::string objPath = hitableJson["objPath"];
+            const auto object = std::make_shared<Mesh>(objPath, material);
+            for (const auto &transformation : hitableJson["transformations"]) {
+                LoadAndPerformTransformation(object, transformation);
+            }
+            return object;
+        } else if (type == "prefabs.cube") {
+            const auto cube = std::make_shared<Cube>(material);
+            for (const auto &transformation : hitableJson["transformations"]) {
+                LoadAndPerformTransformation(cube, transformation);
+            }
+            return cube;
+        } else if (type == "prefabs.rectangle") {
+            const auto rectangle = std::make_shared<Rectangle>(hitableJson["height"], hitableJson["width"], material);
+            for (const auto &transformation : hitableJson["transformations"]) {
+                LoadAndPerformTransformation(rectangle, transformation);
+            }
+            return rectangle;
         }
         throw std::runtime_error("unknown hitable type");
+    }
+
+    static void LoadAndPerformTransformation(const std::shared_ptr<Mesh> &object, const json &transformationJson) {
+        const std::string type = transformationJson["type"];
+        if (type == "translation") {
+            object->ApplyTranslation(transformationJson["dx"], transformationJson["dy"], transformationJson["dz"]);
+            return;
+        } else if (type == "rotation") {
+            object->ApplyRotation(transformationJson["degrees"], transformationJson["x"], transformationJson["y"],
+                                  transformationJson["z"]);
+            return;
+        } else if (type == "scaling") {
+            object->ApplyScaling(transformationJson["scale"]);
+            return;
+        }
+        throw std::runtime_error("unknown transformation type");
     }
 };
 

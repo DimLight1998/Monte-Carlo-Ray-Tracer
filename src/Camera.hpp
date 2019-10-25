@@ -14,7 +14,7 @@
 class Camera {
   public:
     Camera(const glm::vec3 &lookFrom, const glm::vec3 &lookAt, const glm::vec3 &upDirection, float verticalFov,
-           float aspect, float aperture, float focusDistance, float timeStart, float timeEnd);
+           float aspect, float aperture, float focusDistance, float shutterStart, float shutterEnd);
 
     [[nodiscard]] const glm::vec3 &GetPhotoBottomLeftLocation() const;
     [[nodiscard]] const glm::vec3 &GetPhotoLeftRightVec() const;
@@ -24,10 +24,10 @@ class Camera {
     [[nodiscard]] const glm::vec3 &GetV() const;
     [[nodiscard]] const glm::vec3 &GetW() const;
     [[nodiscard]] float GetLensRadius() const;
-    [[nodiscard]] float GetTimeStart() const;
-    [[nodiscard]] float GetTimeEnd() const;
+    [[nodiscard]] float GetShutterStart() const;
+    [[nodiscard]] float GetShutterEnd() const;
 
-    Ray GetEmittedRay(float s, float t);
+    Ray GetEmittedRay(float s, float t) const;
 
   private:
     glm::vec3 _photoBottomLeftLocation{};
@@ -38,12 +38,12 @@ class Camera {
     glm::vec3 _v{}; // @inv unit
     glm::vec3 _w{}; // @inv unit
     float _lensRadius;
-    float _timeStart;
-    float _timeEnd;
+    float _shutterStart;
+    float _shutterEnd;
 };
 
 Camera::Camera(const glm::vec3 &lookFrom, const glm::vec3 &lookAt, const glm::vec3 &upDirection, float verticalFov,
-               float aspect, float aperture, float focusDistance, float timeStart, float timeEnd) {
+               float aspect, float aperture, float focusDistance, float shutterStart, float shutterEnd) {
     const auto theta = verticalFov * glm::pi<float>() / 180;
     const auto halfHeight = glm::tan(theta / 2);
     const auto halfWidth = aspect * halfHeight;
@@ -58,13 +58,13 @@ Camera::Camera(const glm::vec3 &lookFrom, const glm::vec3 &lookAt, const glm::ve
     _photoLeftRightVec = 2 * halfWidth * focusDistance * _u;
     _photoBottomTopVec = 2 * halfHeight * focusDistance * _v;
     _lensRadius = aperture / 2;
-    _timeStart = timeStart;
-    _timeEnd = timeEnd;
+    _shutterStart = shutterStart;
+    _shutterEnd = shutterEnd;
 }
 
-Ray Camera::GetEmittedRay(float s, float t) {
+Ray Camera::GetEmittedRay(float s, float t) const {
     const auto rand = _lensRadius * Utils::RandomPointOnUnitDisk();
-    const auto timeEmitted = Utils::RandomFloatBetween(_timeStart, _timeEnd);
+    const auto timeEmitted = Utils::RandomFloatBetween(_shutterStart, _shutterEnd);
     const auto offset = _u * rand.x + _v * rand.y;
     const auto source = _eyeLocation + offset;
     const auto direction = _photoBottomLeftLocation + s * _photoLeftRightVec + t * _photoBottomTopVec - source;
@@ -87,8 +87,8 @@ const glm::vec3 &Camera::GetW() const { return _w; }
 
 float Camera::GetLensRadius() const { return _lensRadius; }
 
-float Camera::GetTimeStart() const { return _timeStart; }
+float Camera::GetShutterStart() const { return _shutterStart; }
 
-float Camera::GetTimeEnd() const { return _timeEnd; }
+float Camera::GetShutterEnd() const { return _shutterEnd; }
 
 #endif // MONTE_CARLO_RAY_TRACER_CAMERA_HPP
