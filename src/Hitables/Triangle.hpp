@@ -8,20 +8,17 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include "Hitable.hpp"
+#include "../BoundedVolumnHierarchy/BvhLeaf.hpp"
 #include "../Utils.hpp"
+#include "Hitable.hpp"
 
 class Triangle : public Hitable {
-public:
-    Triangle(
-        const Location &vertex1, const Direction &norm1, const UVCoordinate &uv1,
-        const Location &vertex2, const Direction &norm2, const UVCoordinate &uv2,
-        const Location &vertex3, const Direction &norm3, const UVCoordinate &uv3,
-        const Material &material)
-        : _vertex1{vertex1}, _norm1{norm1}, _uv1{uv1},
-          _vertex2{vertex2}, _norm2{norm2}, _uv2{uv2},
-          _vertex3{vertex3}, _norm3{norm3}, _uv3{uv3},
-          _material{material}, _edge12{vertex2 - vertex1}, _edge13{vertex3 - vertex1} {}
+  public:
+    Triangle(const Location &vertex1, const Direction &norm1, const UVCoordinate &uv1, const Location &vertex2,
+             const Direction &norm2, const UVCoordinate &uv2, const Location &vertex3, const Direction &norm3,
+             const UVCoordinate &uv3, const std::shared_ptr<Material> &material)
+        : _vertex1{vertex1}, _norm1{norm1}, _uv1{uv1}, _vertex2{vertex2}, _norm2{norm2}, _uv2{uv2}, _vertex3{vertex3},
+          _norm3{norm3}, _uv3{uv3}, _material{material}, _edge12{vertex2 - vertex1}, _edge13{vertex3 - vertex1} {}
 
     [[nodiscard]] std::optional<HitRecord> HitBy(const Ray &ray, float tMin, float tMax) const override {
         const auto pVec = glm::cross(ray.GetDirection(), _edge13);
@@ -71,9 +68,9 @@ public:
         return AlignedBox(xMin, xMax, yMin, yMax, zMin, zMax);
     }
 
-    [[nodiscard]] const BVH &BuildBVH() const override {
+    [[nodiscard]] std::unique_ptr<BVH> BuildBVH() const override {
         const auto alignedBox = GetAlignedBox();
-        return *new BVHLeaf(alignedBox, *this);
+        return std::make_unique<BVHLeaf>(alignedBox, shared_from_this());
     }
 
     void ApplyTranslation(float dx, float dy, float dz) {
@@ -105,7 +102,7 @@ public:
         _edge13 *= scale;
     }
 
-private:
+  private:
     Location _vertex1;
     Direction _norm1;
     const UVCoordinate _uv1;
@@ -115,10 +112,11 @@ private:
     Location _vertex3;
     Direction _norm3;
     const UVCoordinate _uv3;
-    const Material &_material;
+
+    const std::shared_ptr<Material> _material;
 
     Offset _edge12;
     Offset _edge13;
 };
 
-#endif //MONTE_CARLO_RAY_TRACER_SPHERE_HPP
+#endif // MONTE_CARLO_RAY_TRACER_SPHERE_HPP

@@ -8,7 +8,7 @@
 #include "../Ray.hpp"
 
 class AlignedBox {
-public:
+  public:
     AlignedBox() {
         const auto max = std::numeric_limits<float>::max();
         const auto min = std::numeric_limits<float>::min();
@@ -21,33 +21,22 @@ public:
     }
 
     AlignedBox(const float xMin, const float xMax, const float yMin, const float yMax, const float zMin,
-               const float zMax) : _xMin(xMin), _xMax(xMax), _yMin(yMin), _yMax(yMax), _zMin(zMin), _zMax(zMax) {}
+               const float zMax)
+        : _xMin(xMin), _xMax(xMax), _yMin(yMin), _yMax(yMax), _zMin(zMin), _zMax(zMax) {}
 
     AlignedBox &operator=(const AlignedBox &) = default;
 
-    const float GetXMin() const {
-        return _xMin;
-    }
+    const float GetXMin() const { return _xMin; }
 
-    const float GetXMax() const {
-        return _xMax;
-    }
+    const float GetXMax() const { return _xMax; }
 
-    const float GetYMin() const {
-        return _yMin;
-    }
+    const float GetYMin() const { return _yMin; }
 
-    const float GetYMax() const {
-        return _yMax;
-    }
+    const float GetYMax() const { return _yMax; }
 
-    const float GetZMin() const {
-        return _zMin;
-    }
+    const float GetZMin() const { return _zMin; }
 
-    const float GetZMax() const {
-        return _zMax;
-    }
+    const float GetZMax() const { return _zMax; }
 
     bool IsHitBy(const Ray &ray, float tMin, float tMax) const {
         const auto &origin = ray.GetOrigin();
@@ -59,19 +48,16 @@ public:
             return tMin < tMax;
         };
         return updateAndTest(_xMin, _xMax, origin.x, direction.x) &&
-               updateAndTest(_yMin, _yMax, origin.y, direction.y) &&
-               updateAndTest(_zMin, _zMax, origin.z, direction.z);
+               updateAndTest(_yMin, _yMax, origin.y, direction.y) && updateAndTest(_zMin, _zMax, origin.z, direction.z);
     }
 
     friend AlignedBox operator|(const AlignedBox &left, const AlignedBox &right) {
-        return AlignedBox(
-            std::min(left.GetXMin(), right.GetXMin()), std::max(left.GetXMax(), right.GetXMax()),
-            std::min(left.GetYMin(), right.GetYMin()), std::max(left.GetYMax(), right.GetYMax()),
-            std::min(left.GetZMin(), right.GetZMin()), std::max(left.GetZMax(), right.GetZMax()));
+        return AlignedBox(std::min(left.GetXMin(), right.GetXMin()), std::max(left.GetXMax(), right.GetXMax()),
+                          std::min(left.GetYMin(), right.GetYMin()), std::max(left.GetYMax(), right.GetYMax()),
+                          std::min(left.GetZMin(), right.GetZMin()), std::max(left.GetZMax(), right.GetZMax()));
     }
 
-
-private:
+  private:
     float _xMin;
     float _xMax;
     float _yMin;
@@ -80,4 +66,4 @@ private:
     float _zMax;
 };
 
-#endif //MONTE_CARLO_RAY_TRACER_ALIGNEDBOX_HPP
+#endif // MONTE_CARLO_RAY_TRACER_ALIGNEDBOX_HPP

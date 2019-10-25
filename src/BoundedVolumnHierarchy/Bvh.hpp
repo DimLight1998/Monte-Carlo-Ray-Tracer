@@ -10,24 +10,18 @@
 #include "../Hitables/HitRecord.hpp"
 #include "../Hitables/Hitable.hpp"
 
-class BVH
-{
-public:
+class BVH {
+  public:
     [[nodiscard]] virtual std::optional<HitRecord> HitBy(const Ray &ray, float tMin, float tMax) const = 0;
     [[nodiscard]] virtual const AlignedBox &GetAlignedBox() const = 0;
 
     /**
-     * @brief Build a BVH from hitables. **Memory should be released manually, and hitables won't preserve order.**
+     * @brief Build a BVH from hitables.
      */
-    static const BVH &BuildBVH(const std::vector<std::reference_wrapper<const Hitable>> &hitables);
+    static std::unique_ptr<BVH> BuildBVH(const std::vector<std::shared_ptr<const Hitable>> &hitables);
 
-    /**
-     * @brief Recursively delete nodes.
-     */
-    virtual void Destroy() const = 0;
-
-private:
-    static const BVH &BuildBVH(std::vector<std::reference_wrapper<const Hitable>> &hitables, int lo, int hi);
+  private:
+    static std::unique_ptr<BVH> BuildBVH(std::vector<std::shared_ptr<const Hitable>> &hitables, int lo, int hi);
 };
 
-#endif //MONTE_CARLO_RAY_TRACER_BVH_HPP
+#endif // MONTE_CARLO_RAY_TRACER_BVH_HPP

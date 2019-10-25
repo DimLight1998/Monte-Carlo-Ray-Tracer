@@ -7,9 +7,9 @@
 
 #define TINYOBJLOADER_IMPLEMENTATION
 
+#include <iostream>
 #include <string>
 #include <vector>
-#include <iostream>
 
 #include <obj_loader/tiny_obj_loader.h>
 
@@ -17,8 +17,8 @@
 #include "Triangle.hpp"
 
 class Mesh : public Hitable {
-public:
-    explicit Mesh(const std::string &objPath, const Material &material) {
+  public:
+    explicit Mesh(const std::string &objPath, const std::shared_ptr<Material> &material) {
         tinyobj::attrib_t attrib;
         std::vector<tinyobj::shape_t> shapes;
         // discard materials
@@ -65,23 +65,17 @@ public:
                 indexOffset += fv;
 
                 if (hasNormals) {
-                    _triangles.emplace_back(Triangle(
-                        vertices[0], normals[0], uvs[0],
-                        vertices[1], normals[1], uvs[1],
-                        vertices[2], normals[2], uvs[2],
-                        material
-                    ));
+                    _triangles.emplace_back(Triangle(vertices[0], normals[0], uvs[0], vertices[1], normals[1], uvs[1],
+                                                     vertices[2], normals[2], uvs[2], material));
                 } else {
                     const auto edge1 = vertices[0] - vertices[1];
                     const auto edge2 = vertices[0] - vertices[2];
                     const auto norm1 = glm::normalize(glm::cross(edge1, edge2));
                     const auto norm2 = norm1;
-                    _triangles.emplace_back(Triangle(
-                        vertices[0], norm1, uvs[0], vertices[1], norm1, uvs[1], vertices[2], norm1, uvs[2], material
-                    ));
-                    _triangles.emplace_back(Triangle(
-                        vertices[0], norm2, uvs[0], vertices[1], norm2, uvs[1], vertices[2], norm2, uvs[2], material
-                    ));
+                    _triangles.emplace_back(Triangle(vertices[0], norm1, uvs[0], vertices[1], norm1, uvs[1],
+                                                     vertices[2], norm1, uvs[2], material));
+                    _triangles.emplace_back(Triangle(vertices[0], norm2, uvs[0], vertices[1], norm2, uvs[1],
+                                                     vertices[2], norm2, uvs[2], material));
                 }
             }
         }
@@ -100,43 +94,36 @@ public:
         throw std::runtime_error("should not be called");
     }
 
-    [[nodiscard]] AlignedBox GetAlignedBox() const override {
-        return _alignedBoxPrecomputed;
-    }
+    [[nodiscard]] AlignedBox GetAlignedBox() const override { return _alignedBoxPrecomputed; }
 
-    [[nodiscard]] const BVH &BuildBVH() const override {
-        std::vector<std::reference_wrapper<const Hitable>> triangles;
+    [[nodiscard]] std::unique_ptr<BVH> BuildBVH() const override {
+        std::vector<std::shared_ptr<const Hitable>> triangles;
         std::for_each(_triangles.begin(), _triangles.end(),
-                      [&](const auto &triangle) { triangles.emplace_back(triangle); }
-        );
+                      [&](const auto &triangle) { triangles.emplace_back(triangle.shared_from_this()); });
         return BVH::BuildBVH(triangles);
     }
 
     Mesh &ApplyTranslation(float dx, float dy, float dz) {
-        std::for_each(
-            _triangles.begin(), _triangles.end(), [=](auto &triangle) { triangle.ApplyTranslation(dx, dy, dz); }
-        );
+        std::for_each(_triangles.begin(), _triangles.end(),
+                      [=](auto &triangle) { triangle.ApplyTranslation(dx, dy, dz); });
         RebuildAlignedBox();
         return *this;
     }
 
     Mesh &ApplyRotation(float degrees, float x, float y, float z) {
-        std::for_each(
-            _triangles.begin(), _triangles.end(), [=](auto &triangle) { triangle.ApplyRotation(degrees, x, y, z); }
-        );
+        std::for_each(_triangles.begin(), _triangles.end(),
+                      [=](auto &triangle) { triangle.ApplyRotation(degrees, x, y, z); });
         RebuildAlignedBox();
         return *this;
     }
 
     Mesh &ApplyScaling(float scale) {
-        std::for_each(
-            _triangles.begin(), _triangles.end(), [=](auto &triangle) { triangle.ApplyScaling(scale); }
-        );
+        std::for_each(_triangles.begin(), _triangles.end(), [=](auto &triangle) { triangle.ApplyScaling(scale); });
         RebuildAlignedBox();
         return *this;
     }
 
-protected:
+  protected:
     std::vector<Triangle> _triangles;
     AlignedBox _alignedBoxPrecomputed;
 
@@ -151,5 +138,4 @@ protected:
     }
 };
 
-
-#endif //MONTE_CARLO_RAY_TRACER_MESH_HPP
+#endif // MONTE_CARLO_RAY_TRACER_MESH_HPP

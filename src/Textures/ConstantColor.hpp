@@ -7,18 +7,16 @@
 
 #include "Texture.hpp"
 
-class ConstantColor : public Texture
-{
-public:
+class ConstantColor : public Texture {
+  public:
     explicit ConstantColor(const Color &color) : _color(color) {}
 
-    [[nodiscard]] Color GetTextureColorAt(const UVCoordinate &uv, const Location &location) const override
-    {
+    [[nodiscard]] Color GetTextureColorAt(const UVCoordinate &uv, const Location &location) const override {
         return _color;
     }
 
-private:
+  private:
     Color _color;
 };
 
-#endif //MONTE_CARLO_RAY_TRACER_CONSTANTCOLOR_HPP
+#endif // MONTE_CARLO_RAY_TRACER_CONSTANTCOLOR_HPP

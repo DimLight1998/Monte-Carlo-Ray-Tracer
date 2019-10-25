@@ -7,9 +7,8 @@
 
 #include "../Aliases.hpp"
 
-class Texture
-{
-public:
+class Texture {
+  public:
     /**
      * @brief Get the color of the texture at a given point.
      * @param uv UV coordinate of point on the object with this material.
@@ -19,4 +18,4 @@ public:
     [[nodiscard]] virtual Color GetTextureColorAt(const UVCoordinate &uv, const Location &location) const = 0;
 };
 
-#endif //MONTE_CARLO_RAY_TRACER_TEXTURE_HPP
+#endif // MONTE_CARLO_RAY_TRACER_TEXTURE_HPP

@@ -5,32 +5,28 @@
 #ifndef MONTE_CARLO_RAY_TRACER_LAMBERTIAN_HPP
 #define MONTE_CARLO_RAY_TRACER_LAMBERTIAN_HPP
 
-#include "Material.hpp"
 #include "../Textures/Texture.hpp"
 #include "../Utils.hpp"
+#include "Material.hpp"
 
-class Lambertian : public Material
-{
-public:
-    explicit Lambertian(const Texture &texture) : _texture{texture} {}
+class Lambertian : public Material {
+  public:
+    explicit Lambertian(const std::shared_ptr<Texture> &texture) : _texture{texture} {}
 
-    [[nodiscard]] std::optional<std::pair<Attenuation, Ray>> Scattered(const Ray &ray, const HitRecord &hitRecord) const override
-    {
+    [[nodiscard]] std::optional<std::pair<Attenuation, Ray>> Scattered(const Ray &ray,
+                                                                       const HitRecord &hitRecord) const override {
         const auto scatterDirection = hitRecord.GetNorm() + Utils::RandomPointInUnitSphere();
-        if (glm::dot(scatterDirection, hitRecord.GetNorm()) > 0)
-        {
+        if (glm::dot(scatterDirection, hitRecord.GetNorm()) > 0) {
             const auto scatterRay = Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted());
-            const auto attenuation = _texture.GetTextureColorAt(hitRecord.GetUv(), hitRecord.GetLocation());
+            const auto attenuation = _texture->GetTextureColorAt(hitRecord.GetUv(), hitRecord.GetLocation());
             return {{attenuation, scatterRay}};
-        }
-        else
-        {
+        } else {
             return {};
         }
     }
 
-private:
-    const Texture &_texture;
+  private:
+    const std::shared_ptr<Texture> _texture;
 };
 
-#endif //MONTE_CARLO_RAY_TRACER_LAMBERTIAN_HPP
+#endif // MONTE_CARLO_RAY_TRACER_LAMBERTIAN_HPP

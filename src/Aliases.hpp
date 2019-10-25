@@ -14,4 +14,4 @@ using Offset = glm::vec3;
 using Direction = glm::vec3;
 using UVCoordinate = glm::vec2;
 
-#endif //MONTE_CARLO_RAY_TRACER_ALIASES_HPP
+#endif // MONTE_CARLO_RAY_TRACER_ALIASES_HPP

@@ -5,14 +5,14 @@
 #ifndef MONTE_CARLO_RAY_TRACER_UTILS_HPP
 #define MONTE_CARLO_RAY_TRACER_UTILS_HPP
 
+#include "Aliases.hpp"
+#include <chrono>
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
 #include <random>
-#include <chrono>
-#include "Aliases.hpp"
 
 class Utils {
-public:
+  public:
     /**
      * @brief Return a random float in a given range.
      * @param a Lower bound.
@@ -81,7 +81,7 @@ public:
         return {1 - (phi + pi) / (2 * pi), (theta + pi / 2) / pi};
     }
 
-private:
+  private:
 };
 
-#endif //MONTE_CARLO_RAY_TRACER_UTILS_HPP
+#endif // MONTE_CARLO_RAY_TRACER_UTILS_HPP

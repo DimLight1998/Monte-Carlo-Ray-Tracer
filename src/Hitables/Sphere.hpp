@@ -5,26 +5,20 @@
 #ifndef MONTE_CARLO_RAY_TRACER_SPHERE_HPP
 #define MONTE_CARLO_RAY_TRACER_SPHERE_HPP
 
-#include "Hitable.hpp"
-#include "../Utils.hpp"
 #include "../BoundedVolumnHierarchy/BvhLeaf.hpp"
+#include "../Utils.hpp"
+#include "Hitable.hpp"
 
 class Sphere : public Hitable {
-public:
-    Sphere(const Location &center, const float radius, const Material &material) : _center(center), _radius(radius),
-                                                                                   _material(material) {}
+  public:
+    Sphere(const Location &center, const float radius, const std::shared_ptr<Material> &material)
+        : _center(center), _radius(radius), _material(material) {}
 
-    [[nodiscard]] const Location &GetCenter() const {
-        return _center;
-    }
+    [[nodiscard]] const Location &GetCenter() const { return _center; }
 
-    [[nodiscard]] float GetRadius() const {
-        return _radius;
-    }
+    [[nodiscard]] float GetRadius() const { return _radius; }
 
-    [[nodiscard]] const Material &GetMaterial() const {
-        return _material;
-    }
+    [[nodiscard]] const Material &GetMaterial() const { return *_material; }
 
     [[nodiscard]] std::optional<HitRecord> HitBy(const Ray &ray, float tMin, float tMax) const override {
         const auto oc = ray.GetOrigin() - _center;
@@ -64,15 +58,15 @@ public:
         return AlignedBox(ls.x, hs.x, ls.y, hs.y, ls.z, hs.z);
     }
 
-    [[nodiscard]] const BVH &BuildBVH() const override {
+    [[nodiscard]] std::unique_ptr<BVH> BuildBVH() const override {
         const auto alignedBox = GetAlignedBox();
-        return *new BVHLeaf(alignedBox, *this);
+        return std::make_unique<BVHLeaf>(alignedBox, shared_from_this());
     }
 
-private:
+  private:
     const Location _center;
     const float _radius;
-    const Material &_material;
+    const std::shared_ptr<Material> _material;
 };
 
-#endif //MONTE_CARLO_RAY_TRACER_SPHERE_HPP
+#endif // MONTE_CARLO_RAY_TRACER_SPHERE_HPP
