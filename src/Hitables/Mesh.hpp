@@ -80,8 +80,6 @@ class Mesh : public Hitable {
             }
         }
 
-        const auto max = std::numeric_limits<float>::max();
-        const auto min = std::numeric_limits<float>::min();
         AlignedBox alignedBox;
         for (const auto &triangle : _triangles) {
             alignedBox = alignedBox | triangle.GetAlignedBox();
@@ -121,6 +119,12 @@ class Mesh : public Hitable {
         std::for_each(_triangles.begin(), _triangles.end(), [=](auto &triangle) { triangle.ApplyScaling(scale); });
         RebuildAlignedBox();
         return *this;
+    }
+
+    virtual std::string ToString() const override {
+        std::stringstream ss;
+        ss << "mesh of " << _triangles.size() << " triangles";
+        return ss.str();
     }
 
   protected:

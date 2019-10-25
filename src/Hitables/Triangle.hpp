@@ -23,7 +23,7 @@ class Triangle : public Hitable {
     [[nodiscard]] std::optional<HitRecord> HitBy(const Ray &ray, float tMin, float tMax) const override {
         const auto pVec = glm::cross(ray.GetDirection(), _edge13);
         const auto det = glm::dot(_edge12, pVec);
-        const auto epsilon = glm::epsilon<float>();
+        const auto epsilon = Utils::Epsilon;
         if (det > -epsilon && det < epsilon)
             return {};
         const auto invDet = 1 / det;
@@ -57,8 +57,8 @@ class Triangle : public Hitable {
         // in case of equal
         auto adjust = [=](auto &val1, auto &val2) {
             if (val1 == val2) {
-                val1 -= glm::epsilon<float>();
-                val2 += glm::epsilon<float>();
+                val1 -= Utils::Epsilon;
+                val2 += Utils::Epsilon;
             }
         };
         adjust(xMin, xMax);
@@ -83,7 +83,7 @@ class Triangle : public Hitable {
     void ApplyRotation(float degrees, float x, float y, float z) {
         Direction direction(x, y, z);
         direction = glm::normalize(direction);
-        const auto rotateMat = glm::mat3(glm::rotate(degrees, direction));
+        const auto rotateMat = glm::mat3(glm::rotate(glm::radians(degrees), direction));
         _vertex1 = rotateMat * _vertex1;
         _vertex2 = rotateMat * _vertex2;
         _vertex3 = rotateMat * _vertex3;

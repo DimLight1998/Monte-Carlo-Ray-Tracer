@@ -6,6 +6,7 @@
 #define MONTE_CARLO_RAY_TRACER_BVHNODE_HPP
 
 #include <memory>
+#include <iostream>
 
 #include "../Hitables/AlignedBox.hpp"
 #include "Bvh.hpp"
@@ -36,6 +37,10 @@ class BVHNode : public BVH {
     }
 
     [[nodiscard]] const AlignedBox &GetAlignedBox() const override { return _alignedBox; }
+
+    virtual std::string ToString() const override {
+        return "node " + _alignedBox.ToString() + " [" + _bvh1->ToString() + "] [" + _bvh2->ToString() + "]";
+    }
 
   private:
     const std::unique_ptr<BVH> _bvh1;

@@ -18,6 +18,8 @@ class BVHEmpty : public BVH {
     [[nodiscard]] const AlignedBox &GetAlignedBox() const override {
         throw std::runtime_error("trying to get aligned box of BVHEmpty");
     }
+
+    virtual std::string ToString() const override { return "empty"; }
 };
 
 #endif // MONTE_CARLO_RAY_TRACER_BVHEMPTY_HPP

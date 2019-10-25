@@ -10,6 +10,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
 #include <random>
+#include <sstream>
 
 class Utils {
   public:
@@ -80,6 +81,20 @@ class Utils {
         const auto pi = glm::pi<float>();
         return {1 - (phi + pi) / (2 * pi), (theta + pi / 2) / pi};
     }
+
+    static std::string Vec3ToString(const glm::vec3 &v) {
+        std::stringstream ss;
+        ss << "{" << v.x << ", " << v.y << ", " << v.z << "}";
+        return ss.str();
+    }
+
+    static std::pair<float, float> FloatMinMax(float a, float b) {
+        return (a < b) ? std::make_pair(a, b) : std::make_pair(b, a);
+    }
+
+    constexpr static float Epsilon = 0.001;
+    constexpr static float PosInfinity = std::numeric_limits<float>::max();
+    constexpr static float NegInfinity = std::numeric_limits<float>::min();
 
   private:
 };

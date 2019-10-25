@@ -24,6 +24,10 @@ class BVHLeaf : public BVH {
 
     [[nodiscard]] const AlignedBox &GetAlignedBox() const override { return _alignedBox; }
 
+    virtual std::string ToString() const override {
+        return "leaf " + _alignedBox.ToString() + " <" + _hitable->ToString() + ">";
+    }
+
   private:
     const std::shared_ptr<const Hitable> _hitable;
     const AlignedBox _alignedBox;

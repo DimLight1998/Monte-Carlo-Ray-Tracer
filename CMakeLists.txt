@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 project(Monte_Carlo_Ray_Tracer)
 
 set(CMAKE_CXX_STANDARD 17)
+set(EXECUTABLE_OUTPUT_PATH "bin")
 
 find_package(OpenCV REQUIRED)
 if (OpenCT_FOUND)

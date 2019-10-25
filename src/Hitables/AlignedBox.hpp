@@ -6,12 +6,15 @@
 #define MONTE_CARLO_RAY_TRACER_ALIGNEDBOX_HPP
 
 #include "../Ray.hpp"
+#include "../Utils.hpp"
+#include <iostream>
+#include <sstream>
 
 class AlignedBox {
   public:
     AlignedBox() {
-        const auto max = std::numeric_limits<float>::max();
-        const auto min = std::numeric_limits<float>::min();
+        const auto max = Utils::PosInfinity;
+        const auto min = -Utils::NegInfinity;
         _xMin = max;
         _xMax = min;
         _yMin = max;
@@ -42,7 +45,9 @@ class AlignedBox {
         const auto &origin = ray.GetOrigin();
         const auto &direction = ray.GetDirection();
         const auto updateAndTest = [&tMin, &tMax](float min, float max, float origin, float direction) -> bool {
-            const auto minMax = std::minmax((min - origin) / direction, (max - origin) / direction);
+            const auto minVal = (min - origin) / direction;
+            const auto maxVal = (max - origin) / direction;
+            const auto minMax = std::minmax(minVal, maxVal);
             tMin = std::max(minMax.first, tMin);
             tMax = std::min(minMax.second, tMax);
             return tMin < tMax;
@@ -55,6 +60,12 @@ class AlignedBox {
         return AlignedBox(std::min(left.GetXMin(), right.GetXMin()), std::max(left.GetXMax(), right.GetXMax()),
                           std::min(left.GetYMin(), right.GetYMin()), std::max(left.GetYMax(), right.GetYMax()),
                           std::min(left.GetZMin(), right.GetZMin()), std::max(left.GetZMax(), right.GetZMax()));
+    }
+
+    std::string ToString() const {
+        std::stringstream ss;
+        ss << "(" << _xMin << " " << _xMax << " " << _yMin << " " << _yMax << " " << _zMin << " " << _zMax << ")";
+        return ss.str();
     }
 
   private:

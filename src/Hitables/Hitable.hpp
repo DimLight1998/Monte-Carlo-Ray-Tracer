@@ -28,6 +28,8 @@ class Hitable : public std::enable_shared_from_this<Hitable> {
      * @brief Build the BVH of this hitable.
      */
     [[nodiscard]] virtual std::unique_ptr<BVH> BuildBVH() const = 0;
+
+    virtual std::string ToString() const { return "hitable"; };
 };
 
 #endif // MONTE_CARLO_RAY_TRACER_HITABLE_HPP

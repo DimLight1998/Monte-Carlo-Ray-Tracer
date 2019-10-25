@@ -1,25 +1,13 @@
 #include <functional>
 #include <iostream>
-#include <memory>
-#include <opencv2/core.hpp>
-#include <opencv2/highgui.hpp>
-#include <utility>
 #include <vector>
 
-#include "BoundedVolumnHierarchy/BvhNode.hpp"
-#include "Camera.hpp"
-#include "Hitables/Mesh.hpp"
-#include "Hitables/Prefabs/Cube.hpp"
-#include "Hitables/Prefabs/Rectangle.hpp"
-#include "Hitables/Sphere.hpp"
-#include "Materials/Lambertian.hpp"
-#include "Materials/LightSource.hpp"
-#include "Materials/Metal.hpp"
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
+
 #include "Rendering/ConfigLoader.hpp"
 #include "Rendering/RenderingEngine.hpp"
 #include "Rendering/SceneLoader.hpp"
-#include "Textures/ConstantColor.hpp"
-#include "Utils.hpp"
 
 using namespace std;
 

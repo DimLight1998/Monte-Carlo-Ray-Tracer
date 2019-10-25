@@ -63,6 +63,12 @@ class Sphere : public Hitable {
         return std::make_unique<BVHLeaf>(alignedBox, shared_from_this());
     }
 
+    virtual std::string ToString() const override {
+        std::stringstream ss;
+        ss << "sphere of " << _radius;
+        return ss.str();
+    }
+
   private:
     const Location _center;
     const float _radius;

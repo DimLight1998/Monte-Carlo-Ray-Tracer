@@ -20,6 +20,8 @@ class BVH {
      */
     static std::unique_ptr<BVH> BuildBVH(const std::vector<std::shared_ptr<const Hitable>> &hitables);
 
+    virtual std::string ToString() const = 0;
+
   private:
     static std::unique_ptr<BVH> BuildBVH(std::vector<std::shared_ptr<const Hitable>> &hitables, int lo, int hi);
 };

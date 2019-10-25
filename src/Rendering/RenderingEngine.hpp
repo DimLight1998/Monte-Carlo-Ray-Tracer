@@ -33,12 +33,10 @@ class RenderingEngine {
     }
 
   private:
-    constexpr static int DEBUG_ONLY_RENDER_DEPTH = 10;
     constexpr static Color Black = {0, 0, 0};
     constexpr static Color DEBUG_ONLY_SKY = {0.9, 1.0, 1.0};
-    //    constexpr static Color DEBUG_ONLY_SKY = {0.1, 0.1, 0.1};
-    constexpr static float RayHitMin = 1e-3;
-    constexpr static float RayHitMax = std::numeric_limits<float>::max();
+    constexpr static float RayHitMin = Utils::Epsilon;
+    constexpr static float RayHitMax = Utils::PosInfinity;
 };
 
 #endif // MONTE_CARLO_RAY_TRACER_RENDERINGENGINE_HPP

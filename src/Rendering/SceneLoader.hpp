@@ -12,6 +12,11 @@
 #include <json/json.hpp>
 
 #include "../Hitables/Hitable.hpp"
+#include "../Hitables/Mesh.hpp"
+#include "../Hitables/Sphere.hpp"
+#include "../Hitables/Prefabs/Cube.hpp"
+#include "../Hitables/Prefabs/Rectangle.hpp"
+#include "../Materials/Lambertian.hpp"
 #include "../Textures/ConstantColor.hpp"
 
 using json = nlohmann::json;

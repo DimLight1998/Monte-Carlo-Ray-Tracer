@@ -5,7 +5,9 @@
 #ifndef MONTE_CARLO_RAY_TRACER_RAY_HPP
 #define MONTE_CARLO_RAY_TRACER_RAY_HPP
 
+#include "Utils.hpp"
 #include <glm/glm.hpp>
+#include <sstream>
 
 class Ray {
   public:
@@ -19,6 +21,12 @@ class Ray {
     [[nodiscard]] float GetTimeEmitted() const { return _timeEmitted; };
 
     [[nodiscard]] glm::vec3 GetLocationAt(float tDirection) const { return _origin + _direction * tDirection; };
+
+    std::string ToString() const {
+        std::stringstream ss;
+        ss << "{origin: " << Utils::Vec3ToString(_origin) << ", direction: " << Utils::Vec3ToString(_direction) << "}";
+        return ss.str();
+    }
 
   private:
     glm::vec3 _origin;
