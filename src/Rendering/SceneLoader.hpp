@@ -103,7 +103,10 @@ class SceneLoader {
             }
             return object;
         } else if (type == "prefabs.cube") {
-            const auto cube = std::make_shared<Cube>(material);
+            const float x = hitableJson["x"];
+            const float y = hitableJson["y"];
+            const float z = hitableJson["z"];
+            const auto cube = std::make_shared<Cube>(material, x, y, z);
             for (const auto &transformation : hitableJson["transformations"]) {
                 LoadAndPerformTransformation(cube, transformation);
             }

@@ -9,15 +9,15 @@
 
 class Cube : public Mesh {
   public:
-    explicit Cube(const std::shared_ptr<Material> &material) {
-        const auto rightTopFront = Location(1, 1, 1);
-        const auto rightTopBack = Location(1, 1, -1);
-        const auto rightBottomFront = Location(1, -1, 1);
-        const auto rightBottomBack = Location(1, -1, -1);
-        const auto leftTopFront = Location(-1, 1, 1);
-        const auto leftTopBack = Location(-1, 1, -1);
-        const auto leftBottomFront = Location(-1, -1, 1);
-        const auto leftBottomBack = Location(-1, -1, -1);
+    explicit Cube(const std::shared_ptr<Material> &material, int x, int y, int z) {
+        const auto rightTopFront = Location(x, y, z);
+        const auto rightTopBack = Location(x, y, 0);
+        const auto rightBottomFront = Location(x, 0, z);
+        const auto rightBottomBack = Location(x, 0, 0);
+        const auto leftTopFront = Location(0, y, z);
+        const auto leftTopBack = Location(0, y, 0);
+        const auto leftBottomFront = Location(0, 0, z);
+        const auto leftBottomBack = Location(0, 0, 0);
         const auto right = Direction(1, 0, 0);
         const auto left = Direction(-1, 0, 0);
         const auto top = Direction(0, 1, 0);

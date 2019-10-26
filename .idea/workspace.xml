@@ -18,14 +18,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Hitables/Prefabs/Rectangle.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hitables/Prefabs/Rectangle.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Materials/Lambertian.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Materials/Lambertian.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Materials/Metal.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Materials/Metal.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Rendering/ConfigLoader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rendering/ConfigLoader.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Rendering/RenderingEngine.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rendering/RenderingEngine.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Rendering/SceneLoader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rendering/SceneLoader.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/Prefabs/Cube.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hitables/Prefabs/Cube.hpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -114,7 +107,7 @@
       <workItem from="1571883178480" duration="17027000" />
       <workItem from="1571907115685" duration="23431000" />
       <workItem from="1571985877694" duration="20526000" />
-      <workItem from="1572060371339" duration="7600000" />
+      <workItem from="1572060371339" duration="7905000" />
     </task>
     <servers />
   </component>
