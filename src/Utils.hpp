@@ -92,6 +92,23 @@ class Utils {
         return (a < b) ? std::make_pair(a, b) : std::make_pair(b, a);
     }
 
+    static std::optional<Direction> Refract(const Direction &incident, const Direction &norm, float eta) {
+        const auto incidentNormed = glm::normalize(incident);
+        const auto dt = glm::dot(incidentNormed, norm);
+        const auto delta = 1 - eta * eta * (1 - dt * dt);
+        if (delta > 0) {
+            return {eta * (incidentNormed - norm * dt) - norm * glm::sqrt(delta)};
+        } else {
+            return {};
+        }
+    }
+
+    static float Schlick(float cosine, float index) {
+        const auto r = glm::pow(1 - index, 2) / glm::pow(1 + index, 2);
+        const auto ret = r + (1 - r) * glm::pow(1 - cosine, 5);
+        return ret;
+    }
+
     constexpr static float Epsilon = 0.001;
     constexpr static float PosInfinity = std::numeric_limits<float>::max();
     constexpr static float NegInfinity = std::numeric_limits<float>::min();

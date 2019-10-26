@@ -16,6 +16,7 @@
 #include "../Hitables/Prefabs/Cube.hpp"
 #include "../Hitables/Prefabs/Rectangle.hpp"
 #include "../Hitables/Sphere.hpp"
+#include "../Materials/Glass.hpp"
 #include "../Materials/Lambertian.hpp"
 #include "../Materials/LightSource.hpp"
 #include "../Materials/Metal.hpp"
@@ -77,6 +78,11 @@ class SceneLoader {
             Color attenuation{attenuationArray[0], attenuationArray[1], attenuationArray[2]};
             const float fuzziness = materialJson["fuzziness"];
             return {name, std::make_shared<Metal>(attenuation, fuzziness)};
+        } else if (type == "glass") {
+            const auto &attenuationArray = materialJson["attenuation"];
+            Color attenuation{attenuationArray[0], attenuationArray[1], attenuationArray[2]};
+            const float index = materialJson["index"];
+            return {name, std::make_shared<Glass>(index, attenuation)};
         } else if (type == "lightSource") {
             const std::string textureName = materialJson["texture"];
             const auto &texture = textureMap.at(textureName);

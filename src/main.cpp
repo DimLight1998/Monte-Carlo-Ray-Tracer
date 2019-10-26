@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 
+#include <iomanip>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 
@@ -50,6 +51,14 @@ int main() {
         cv::imshow("display", mat);
         cv::waitKey(1);
     }
+
+    const auto t = std::time(nullptr);
+    const auto tm = *std::localtime(&t);
+    std::ostringstream oss;
+    oss << std::put_time(&tm, "%Y-%m-%d-%H-%M-%S");
+    const auto timeString = oss.str();
+    const auto mat = cv::Mat(height, width, CV_8UC3, data.data()); // NOLINT(hicpp-signed-bitwise)
+    cv::imwrite(timeString + ".png", mat);
 
     cv::waitKey(0);
     return 0;

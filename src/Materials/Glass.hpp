@@ -14,10 +14,28 @@ class Glass : public Material {
 
     [[nodiscard]] std::optional<std::pair<Attenuation, Ray>> Scattered(const Ray &ray,
                                                                        const HitRecord &hitRecord) const override {
-        // todo
-        const auto a = glm::refract(ray.GetDirection(), hitRecord.GetNorm(), _refractIndex);
-        // todo add schlick
-        return {};
+        const auto toOuter = glm::dot(ray.GetDirection(), hitRecord.GetNorm()) > 0;
+        const auto normSide = toOuter ? (-hitRecord.GetNorm()) : hitRecord.GetNorm();
+        const auto eta = toOuter ? _refractIndex : 1 / _refractIndex;
+        const auto cosine =
+            toOuter
+                ? (glm::dot(ray.GetDirection(), hitRecord.GetNorm()) / glm::length(ray.GetDirection())) * _refractIndex
+                : (glm::dot(ray.GetDirection(), hitRecord.GetNorm()) / glm::length(ray.GetDirection())) * (-1);
+        const auto res = Utils::Refract(ray.GetDirection(), normSide, eta);
+        if (res) {
+            const auto refracted = res.value();
+            const auto threshold = Utils::Schlick(cosine, _refractIndex);
+            const auto value = Utils::RandomFloatBetween(0, 1);
+            if (value < threshold) {
+                const auto reflected = glm::reflect(ray.GetDirection(), hitRecord.GetNorm());
+                return {{{1, 1, 1}, {hitRecord.GetLocation(), reflected, ray.GetTimeEmitted()}}};
+            } else {
+                return {{_attenuation, {hitRecord.GetLocation(), refracted, ray.GetTimeEmitted()}}};
+            }
+        } else {
+            const auto reflected = glm::reflect(ray.GetDirection(), hitRecord.GetNorm());
+            return {{{1, 1, 1}, {hitRecord.GetLocation(), reflected, ray.GetTimeEmitted()}}};
+        }
     }
 
   private:
