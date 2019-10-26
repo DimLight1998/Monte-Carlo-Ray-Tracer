@@ -13,10 +13,12 @@
 
 #include "../Hitables/Hitable.hpp"
 #include "../Hitables/Mesh.hpp"
-#include "../Hitables/Sphere.hpp"
 #include "../Hitables/Prefabs/Cube.hpp"
 #include "../Hitables/Prefabs/Rectangle.hpp"
+#include "../Hitables/Sphere.hpp"
 #include "../Materials/Lambertian.hpp"
+#include "../Materials/LightSource.hpp"
+#include "../Materials/Metal.hpp"
 #include "../Textures/ConstantColor.hpp"
 
 using json = nlohmann::json;
@@ -70,6 +72,15 @@ class SceneLoader {
             const std::string textureName = materialJson["texture"];
             const auto &texture = textureMap.at(textureName);
             return {name, std::make_shared<Lambertian>(texture)};
+        } else if (type == "metal") {
+            const auto &attenuationArray = materialJson["attenuation"];
+            Color attenuation{attenuationArray[0], attenuationArray[1], attenuationArray[2]};
+            const float fuzziness = materialJson["fuzziness"];
+            return {name, std::make_shared<Metal>(attenuation, fuzziness)};
+        } else if (type == "lightSource") {
+            const std::string textureName = materialJson["texture"];
+            const auto &texture = textureMap.at(textureName);
+            return {name, std::make_shared<LightSource>(texture)};
         }
         throw std::runtime_error("unknown material type");
     }
@@ -99,6 +110,45 @@ class SceneLoader {
             return cube;
         } else if (type == "prefabs.rectangle") {
             const auto rectangle = std::make_shared<Rectangle>(hitableJson["height"], hitableJson["width"], material);
+            for (const auto &transformation : hitableJson["transformations"]) {
+                LoadAndPerformTransformation(rectangle, transformation);
+            }
+            return rectangle;
+        } else if (type == "prefabs.rectangle:xy+" || type == "prefabs.rectangle:xy-") {
+            const float xMin = hitableJson["xMin"];
+            const float xMax = hitableJson["xMax"];
+            const float yMin = hitableJson["yMin"];
+            const float yMax = hitableJson["yMax"];
+            const float z = hitableJson["z"];
+            const auto positiveNorm = *(type.end() - 1) == '+';
+            const auto rectangle =
+                std::make_shared<Rectangle>(Rectangle::OfXY(xMin, xMax, yMin, yMax, z, positiveNorm, material));
+            for (const auto &transformation : hitableJson["transformations"]) {
+                LoadAndPerformTransformation(rectangle, transformation);
+            }
+            return rectangle;
+        } else if (type == "prefabs.rectangle:+yz" || type == "prefabs.rectangle:-yz") {
+            const float yMin = hitableJson["yMin"];
+            const float yMax = hitableJson["yMax"];
+            const float zMin = hitableJson["zMin"];
+            const float zMax = hitableJson["zMax"];
+            const float x = hitableJson["x"];
+            const auto positiveNorm = *(type.end() - 3) == '+';
+            const auto rectangle =
+                std::make_shared<Rectangle>(Rectangle::OfYZ(yMin, yMax, zMin, zMax, x, positiveNorm, material));
+            for (const auto &transformation : hitableJson["transformations"]) {
+                LoadAndPerformTransformation(rectangle, transformation);
+            }
+            return rectangle;
+        } else if (type == "prefabs.rectangle:x+z" || type == "prefabs.rectangle:x-z") {
+            const float zMin = hitableJson["zMin"];
+            const float zMax = hitableJson["zMax"];
+            const float xMin = hitableJson["xMin"];
+            const float xMax = hitableJson["xMax"];
+            const float y = hitableJson["y"];
+            const auto positiveNorm = *(type.end() - 2) == '+';
+            const auto rectangle =
+                std::make_shared<Rectangle>(Rectangle::OfZX(zMin, zMax, xMin, xMax, y, positiveNorm, material));
             for (const auto &transformation : hitableJson["transformations"]) {
                 LoadAndPerformTransformation(rectangle, transformation);
             }

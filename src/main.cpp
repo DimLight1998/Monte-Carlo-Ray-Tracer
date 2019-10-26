@@ -19,28 +19,30 @@ int main() {
     const auto height = configAndCamera.first.GetImageHeight();
     const auto maxDepth = configAndCamera.first.GetRayMaxDepth();
     const auto numSamples = configAndCamera.first.GetSamplesPerPixel();
+    const auto skyColor = configAndCamera.first.GetSkyColor();
     const auto bvh = BVH::BuildBVH(hitables);
 
     auto data = std::vector<unsigned char>();
     data.reserve(height * width * 3);
-    auto dataSum = std::vector<unsigned long long>();
+    auto dataSum = std::vector<long double>();
     dataSum.reserve(height * width * 3);
 
     for (auto n = 0; n < numSamples; n++) {
         for (auto i = 0; i < width; i++) {
-#pragma omp parallel for default(none) shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data)
+#pragma omp parallel for default(none) shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data, skyColor)
             for (auto j = 0; j < height; j++) {
                 const auto x = Utils::RandomFloatBetween((i - 0.5f) / width, (i + 0.5f) / width);
                 const auto y = Utils::RandomFloatBetween((j - 0.5f) / height, (j + 0.5f) / height);
                 Ray ray = camera.GetEmittedRay(x, y);
-                const auto color = RenderingEngine::GetRayColor(bvh, ray, maxDepth);
+                const auto color = RenderingEngine::GetRayColor(bvh, ray, maxDepth, skyColor);
                 const auto index = ((height - 1 - j) * width + i) * 3;
-                dataSum[index + 0] += std::clamp(color.b * 255, 0.0f, 255.0f);
-                dataSum[index + 1] += std::clamp(color.g * 255, 0.0f, 255.0f);
-                dataSum[index + 2] += std::clamp(color.r * 255, 0.0f, 255.0f);
-                data[index + 0] = dataSum[index + 0] / (n + 1);
-                data[index + 1] = dataSum[index + 1] / (n + 1);
-                data[index + 2] = dataSum[index + 2] / (n + 1);
+
+                dataSum[index + 0] += color.b;
+                dataSum[index + 1] += color.g;
+                dataSum[index + 2] += color.r;
+                data[index + 0] = std::clamp(glm::sqrt(dataSum[index + 0] / (n + 1)) * 256, 0.0l, 255.99l);
+                data[index + 1] = std::clamp(glm::sqrt(dataSum[index + 1] / (n + 1)) * 256, 0.0l, 255.99l);
+                data[index + 2] = std::clamp(glm::sqrt(dataSum[index + 2] / (n + 1)) * 256, 0.0l, 255.99l);
             }
         }
 

@@ -16,13 +16,9 @@ class Lambertian : public Material {
     [[nodiscard]] std::optional<std::pair<Attenuation, Ray>> Scattered(const Ray &ray,
                                                                        const HitRecord &hitRecord) const override {
         const auto scatterDirection = hitRecord.GetNorm() + Utils::RandomPointInUnitSphere();
-        if (glm::dot(scatterDirection, hitRecord.GetNorm()) > 0) {
-            const auto scatterRay = Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted());
-            const auto attenuation = _texture->GetTextureColorAt(hitRecord.GetUv(), hitRecord.GetLocation());
-            return {{attenuation, scatterRay}};
-        } else {
-            return {};
-        }
+        const auto scatterRay = Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted());
+        const auto attenuation = _texture->GetTextureColorAt(hitRecord.GetUv(), hitRecord.GetLocation());
+        return {{attenuation, scatterRay}};
     }
 
   private:

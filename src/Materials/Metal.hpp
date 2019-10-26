@@ -15,7 +15,7 @@ class Metal : public Material {
 
     [[nodiscard]] std::optional<std::pair<Attenuation, Ray>> Scattered(const Ray &ray,
                                                                        const HitRecord &hitRecord) const override {
-        const auto reflectDirection = glm::reflect(ray.GetDirection(), hitRecord.GetNorm());
+        const auto reflectDirection = glm::reflect(glm::normalize(ray.GetDirection()), hitRecord.GetNorm());
         const auto scatterDirection = reflectDirection + _fuzziness * Utils::RandomPointInUnitSphere();
         if (glm::dot(reflectDirection, hitRecord.GetNorm()) > 0) {
             const auto scatterRay = Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted());

@@ -13,19 +13,21 @@ using json = nlohmann::json;
 
 class ImageConfig {
   public:
-    ImageConfig(int imageWidth, int imageHeight, int rayMaxDepth, int samplesPerPixel)
+    ImageConfig(int imageWidth, int imageHeight, int rayMaxDepth, int samplesPerPixel, const Color &skyColor)
         : _imageWidth(imageWidth), _imageHeight(imageHeight), _rayMaxDepth(rayMaxDepth),
-          _samplesPerPixel(samplesPerPixel) {}
+          _samplesPerPixel(samplesPerPixel), _skyColor(skyColor) {}
     int GetImageWidth() const { return _imageWidth; }
     int GetImageHeight() const { return _imageHeight; }
     int GetRayMaxDepth() const { return _rayMaxDepth; }
     int GetSamplesPerPixel() const { return _samplesPerPixel; }
+    const Color &GetSkyColor() const { return _skyColor; }
 
   private:
     int _imageWidth;
     int _imageHeight;
     int _rayMaxDepth;
     int _samplesPerPixel;
+    Color _skyColor;
 };
 
 class ConfigLoader {
@@ -35,13 +37,15 @@ class ConfigLoader {
         json content;
         t >> content;
 
+        const auto readVec3 = [](const json &j) { return glm::vec3(j[0], j[1], j[2]); };
+
         const int imageWidth = content["settings"]["imageWidth"];
         const int imageHeight = content["settings"]["imageHeight"];
         const int rayMaxDepth = content["settings"]["rayMaxDepth"];
         const int samplesPerPixel = content["settings"]["samplesPerPixel"];
-        ImageConfig config(imageWidth, imageHeight, rayMaxDepth, samplesPerPixel);
+        const auto skyColor = readVec3(content["settings"]["skyColor"]);
+        ImageConfig config(imageWidth, imageHeight, rayMaxDepth, samplesPerPixel, skyColor);
 
-        const auto readVec3 = [](const json &j) { return glm::vec3(j[0], j[1], j[2]); };
         const auto lookFrom = readVec3(content["camera"]["lookFrom"]);
         const auto lookAt = readVec3(content["camera"]["lookAt"]);
         const auto upDirection = readVec3(content["camera"]["upDirection"]);

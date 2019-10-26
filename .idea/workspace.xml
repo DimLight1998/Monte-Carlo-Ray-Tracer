@@ -19,22 +19,12 @@
   <component name="ChangeListManager">
     <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/Bvh.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/Bvh.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/Bvh.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/Bvh.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/BvhEmpty.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/BvhEmpty.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/BvhLeaf.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/BvhLeaf.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/BvhNode.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/BvhNode.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Hitables/AlignedBox.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hitables/AlignedBox.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Hitables/Hitable.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hitables/Hitable.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Hitables/Mesh.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hitables/Mesh.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Hitables/Sphere.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hitables/Sphere.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Hitables/Triangle.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hitables/Triangle.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Materials/Smoke.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Materials/Smoke.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Ray.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ray.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/Prefabs/Rectangle.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hitables/Prefabs/Rectangle.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/Lambertian.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Materials/Lambertian.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/Metal.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Materials/Metal.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rendering/ConfigLoader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rendering/ConfigLoader.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Rendering/RenderingEngine.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rendering/RenderingEngine.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Rendering/SceneLoader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rendering/SceneLoader.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utils.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -123,7 +113,8 @@
       <workItem from="1571816589039" duration="20438000" />
       <workItem from="1571883178480" duration="17027000" />
       <workItem from="1571907115685" duration="23431000" />
-      <workItem from="1571985877694" duration="13055000" />
+      <workItem from="1571985877694" duration="20526000" />
+      <workItem from="1572060371339" duration="7600000" />
     </task>
     <servers />
   </component>
@@ -150,11 +141,6 @@
           <url>file://$PROJECT_DIR$/src/Hitables/Prefabs/Cube.hpp</url>
           <line>42</line>
           <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/main.cpp</url>
-          <line>21</line>
-          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

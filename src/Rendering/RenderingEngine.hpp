@@ -14,7 +14,7 @@
 
 class RenderingEngine {
   public:
-    static Color GetRayColor(const std::unique_ptr<BVH> &bvh, const Ray &ray, int maxDepth) {
+    static Color GetRayColor(const std::unique_ptr<BVH> &bvh, const Ray &ray, int maxDepth, const Color &skyColor) {
         if (maxDepth == 0)
             return Black;
         const auto hitResult = bvh->HitBy(ray, RayHitMin, RayHitMax);
@@ -23,12 +23,13 @@ class RenderingEngine {
             const auto scattered = hitRecord.GetMaterial().Scattered(ray, hitRecord);
             const auto emitted = hitRecord.GetMaterial().Emitted(hitRecord.GetUv(), hitRecord.GetLocation());
             if (scattered) {
-                return emitted + scattered.value().first * GetRayColor(bvh, scattered.value().second, maxDepth - 1);
+                return emitted +
+                       scattered.value().first * GetRayColor(bvh, scattered.value().second, maxDepth - 1, skyColor);
             } else {
                 return emitted;
             }
         } else {
-            return DEBUG_ONLY_SKY;
+            return skyColor;
         }
     }
 
