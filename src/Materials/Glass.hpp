@@ -8,8 +8,7 @@
 #include "../common/Geometry.hpp"
 #include "Material.hpp"
 
-class Glass: public Material
-{
+class Glass: public Material {
     public:
     Glass(const float refractIndex, const Attenuation& attenuation)
         : _refractIndex(refractIndex), _attenuation(attenuation) {}
@@ -24,20 +23,20 @@ class Glass: public Material
                 ? (glm::dot(ray.GetDirection(), hitRecord.GetNorm()) / glm::length(ray.GetDirection())) * _refractIndex
                 : (glm::dot(ray.GetDirection(), hitRecord.GetNorm()) / glm::length(ray.GetDirection())) * (-1);
         const auto res = Refract(ray.GetDirection(), normSide, eta);
-            if (res) {
-                const auto refracted = res.value();
-                const auto threshold = Schlick(cosine, _refractIndex);
-                const auto value     = RandomFloatBetween(0, 1);
-                    if (value < threshold) {
-                        const auto reflected = glm::reflect(ray.GetDirection(), hitRecord.GetNorm());
-                        return { { { 1, 1, 1 }, { hitRecord.GetLocation(), reflected, ray.GetTimeEmitted() } } };
-                    } else {
-                        return { { _attenuation, { hitRecord.GetLocation(), refracted, ray.GetTimeEmitted() } } };
-                    }
-            } else {
+        if (res) {
+            const auto refracted = res.value();
+            const auto threshold = Schlick(cosine, _refractIndex);
+            const auto value     = RandomFloatBetween(0, 1);
+            if (value < threshold) {
                 const auto reflected = glm::reflect(ray.GetDirection(), hitRecord.GetNorm());
                 return { { { 1, 1, 1 }, { hitRecord.GetLocation(), reflected, ray.GetTimeEmitted() } } };
+            } else {
+                return { { _attenuation, { hitRecord.GetLocation(), refracted, ray.GetTimeEmitted() } } };
             }
+        } else {
+            const auto reflected = glm::reflect(ray.GetDirection(), hitRecord.GetNorm());
+            return { { { 1, 1, 1 }, { hitRecord.GetLocation(), reflected, ray.GetTimeEmitted() } } };
+        }
     }
 
     private:

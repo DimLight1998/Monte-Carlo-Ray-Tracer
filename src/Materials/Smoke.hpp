@@ -9,19 +9,19 @@
 #include "../common/Utils.hpp"
 #include "Material.hpp"
 
-class Smoke : public Material {
-  public:
-    explicit Smoke(const std::shared_ptr<Texture> &texture) : _texture(texture) {}
+class Smoke: public Material {
+    public:
+    explicit Smoke(const std::shared_ptr<Texture>& texture): _texture(texture) {}
 
-    [[nodiscard]] std::optional<std::pair<Attenuation, Ray>> Scattered(const Ray &ray,
-                                                                       const HitRecord &hitRecord) const override {
-        const auto attenuation = _texture->GetTextureColorAt(hitRecord.GetUv(), hitRecord.GetLocation());
+    [[nodiscard]] std::optional<std::pair<Attenuation, Ray>>
+    Scattered(const Ray& ray, const HitRecord& hitRecord) const override {
+        const auto attenuation      = _texture->GetTextureColorAt(hitRecord.GetUv(), hitRecord.GetLocation());
         const auto scatterDirection = RandomPointInUnitSphere();
-        return {{attenuation, Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted())}};
+        return { { attenuation, Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted()) } };
     }
 
-  private:
-    const std::shared_ptr<Texture> &_texture;
+    private:
+    const std::shared_ptr<Texture>& _texture;
 };
 
-#endif // MONTE_CARLO_RAY_TRACER_SMOKE_HPP
+#endif  // MONTE_CARLO_RAY_TRACER_SMOKE_HPP

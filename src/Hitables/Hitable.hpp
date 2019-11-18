@@ -12,12 +12,12 @@
 
 class BVH;
 
-class Hitable : public std::enable_shared_from_this<Hitable> {
-  public:
+class Hitable: public std::enable_shared_from_this<Hitable> {
+    public:
     /**
      * @brief Test hitting with a ray, with `tDirection` limited between tMin and tMax.
      */
-    [[nodiscard]] virtual std::optional<HitRecord> HitBy(const Ray &ray, float tMin, float tMax) const = 0;
+    [[nodiscard]] virtual std::optional<HitRecord> HitBy(const Ray& ray, float tMin, float tMax) const = 0;
 
     /**
      * @brief Get the aligned box of this hitable.
@@ -29,7 +29,9 @@ class Hitable : public std::enable_shared_from_this<Hitable> {
      */
     [[nodiscard]] virtual std::unique_ptr<BVH> BuildBVH() const = 0;
 
-    virtual std::string ToString() const { return "hitable"; };
+    virtual std::string ToString() const {
+        return "hitable";
+    };
 };
 
-#endif // MONTE_CARLO_RAY_TRACER_HITABLE_HPP
+#endif  // MONTE_CARLO_RAY_TRACER_HITABLE_HPP

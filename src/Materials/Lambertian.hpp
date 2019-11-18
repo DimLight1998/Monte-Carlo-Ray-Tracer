@@ -9,20 +9,20 @@
 #include "../common/Utils.hpp"
 #include "Material.hpp"
 
-class Lambertian : public Material {
-  public:
-    explicit Lambertian(const std::shared_ptr<Texture> &texture) : _texture{texture} {}
+class Lambertian: public Material {
+    public:
+    explicit Lambertian(const std::shared_ptr<Texture>& texture): _texture { texture } {}
 
-    [[nodiscard]] std::optional<std::pair<Attenuation, Ray>> Scattered(const Ray &ray,
-                                                                       const HitRecord &hitRecord) const override {
+    [[nodiscard]] std::optional<std::pair<Attenuation, Ray>>
+    Scattered(const Ray& ray, const HitRecord& hitRecord) const override {
         const auto scatterDirection = hitRecord.GetNorm() + RandomPointInUnitSphere();
-        const auto scatterRay = Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted());
-        const auto attenuation = _texture->GetTextureColorAt(hitRecord.GetUv(), hitRecord.GetLocation());
-        return {{attenuation, scatterRay}};
+        const auto scatterRay       = Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted());
+        const auto attenuation      = _texture->GetTextureColorAt(hitRecord.GetUv(), hitRecord.GetLocation());
+        return { { attenuation, scatterRay } };
     }
 
-  private:
+    private:
     const std::shared_ptr<Texture> _texture;
 };
 
-#endif // MONTE_CARLO_RAY_TRACER_LAMBERTIAN_HPP
+#endif  // MONTE_CARLO_RAY_TRACER_LAMBERTIAN_HPP

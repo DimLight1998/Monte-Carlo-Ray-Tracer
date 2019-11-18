@@ -15,7 +15,7 @@
 class HitRecord;
 
 class Material {
-  public:
+    public:
     /**
      * @brief Calculate scattered ray on this material when hit.
      * @param hitRecord Information about the hit location.
@@ -24,8 +24,8 @@ class Material {
      *      Otherwise, the first component is the attenuation to be applied on the scattered ray,
      *      and the second component is the scattered ray.
      */
-    [[nodiscard]] virtual std::optional<std::pair<Attenuation, Ray>> Scattered(const Ray &ray,
-                                                                               const HitRecord &hitRecord) const = 0;
+    [[nodiscard]] virtual std::optional<std::pair<Attenuation, Ray>>
+    Scattered(const Ray& ray, const HitRecord& hitRecord) const = 0;
 
     /**
      * @brief Calculate emitted color on this material give location of the point.
@@ -33,7 +33,9 @@ class Material {
      * @param location Location of the point in the world.
      * @return Color of the point.
      */
-    [[nodiscard]] virtual Color Emitted(const UVCoordinate &uv, const Location &location) const { return {0, 0, 0}; };
+    [[nodiscard]] virtual Color Emitted(const UVCoordinate& uv, const Location& location) const {
+        return { 0, 0, 0 };
+    };
 };
 
-#endif // MONTE_CARLO_RAY_TRACER_MATERIAL_HPP
+#endif  // MONTE_CARLO_RAY_TRACER_MATERIAL_HPP

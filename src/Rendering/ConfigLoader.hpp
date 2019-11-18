@@ -12,54 +12,67 @@
 using json = nlohmann::json;
 
 class ImageConfig {
-  public:
-    ImageConfig(int imageWidth, int imageHeight, int rayMaxDepth, int samplesPerPixel, const Color &skyColor)
-        : _imageWidth(imageWidth), _imageHeight(imageHeight), _rayMaxDepth(rayMaxDepth),
-          _samplesPerPixel(samplesPerPixel), _skyColor(skyColor) {}
-    int GetImageWidth() const { return _imageWidth; }
-    int GetImageHeight() const { return _imageHeight; }
-    int GetRayMaxDepth() const { return _rayMaxDepth; }
-    int GetSamplesPerPixel() const { return _samplesPerPixel; }
-    const Color &GetSkyColor() const { return _skyColor; }
+    public:
+    ImageConfig(int imageWidth, int imageHeight, int rayMaxDepth, int samplesPerPixel, const Color& skyColor)
+        : _imageWidth(imageWidth),
+          _imageHeight(imageHeight),
+          _rayMaxDepth(rayMaxDepth),
+          _samplesPerPixel(samplesPerPixel),
+          _skyColor(skyColor) {}
+    int GetImageWidth() const {
+        return _imageWidth;
+    }
+    int GetImageHeight() const {
+        return _imageHeight;
+    }
+    int GetRayMaxDepth() const {
+        return _rayMaxDepth;
+    }
+    int GetSamplesPerPixel() const {
+        return _samplesPerPixel;
+    }
+    const Color& GetSkyColor() const {
+        return _skyColor;
+    }
 
-  private:
-    int _imageWidth;
-    int _imageHeight;
-    int _rayMaxDepth;
-    int _samplesPerPixel;
+    private:
+    int   _imageWidth;
+    int   _imageHeight;
+    int   _rayMaxDepth;
+    int   _samplesPerPixel;
     Color _skyColor;
 };
 
 class ConfigLoader {
-  public:
-    static std::pair<ImageConfig, Camera> LoadConfig(const std::string &filePath) {
+    public:
+    static std::pair<ImageConfig, Camera> LoadConfig(const std::string& filePath) {
         std::ifstream t(filePath);
-        json content;
+        json          content;
         t >> content;
 
-        const auto readVec3 = [](const json &j) { return glm::vec3(j[0], j[1], j[2]); };
+        const auto readVec3 = [](const json& j) { return glm::vec3(j[0], j[1], j[2]); };
 
-        const int imageWidth = content["settings"]["imageWidth"];
-        const int imageHeight = content["settings"]["imageHeight"];
-        const int rayMaxDepth = content["settings"]["rayMaxDepth"];
-        const int samplesPerPixel = content["settings"]["samplesPerPixel"];
-        const auto skyColor = readVec3(content["settings"]["skyColor"]);
+        const int   imageWidth      = content["settings"]["imageWidth"];
+        const int   imageHeight     = content["settings"]["imageHeight"];
+        const int   rayMaxDepth     = content["settings"]["rayMaxDepth"];
+        const int   samplesPerPixel = content["settings"]["samplesPerPixel"];
+        const auto  skyColor        = readVec3(content["settings"]["skyColor"]);
         ImageConfig config(imageWidth, imageHeight, rayMaxDepth, samplesPerPixel, skyColor);
 
-        const auto lookFrom = readVec3(content["camera"]["lookFrom"]);
-        const auto lookAt = readVec3(content["camera"]["lookAt"]);
-        const auto upDirection = readVec3(content["camera"]["upDirection"]);
-        const float verticalFov = content["camera"]["verticalFov"];
-        const float aspect = content["camera"]["aspect"];
-        const float aperture = content["camera"]["aperture"];
+        const auto  lookFrom      = readVec3(content["camera"]["lookFrom"]);
+        const auto  lookAt        = readVec3(content["camera"]["lookAt"]);
+        const auto  upDirection   = readVec3(content["camera"]["upDirection"]);
+        const float verticalFov   = content["camera"]["verticalFov"];
+        const float aspect        = content["camera"]["aspect"];
+        const float aperture      = content["camera"]["aperture"];
         const float focusDistance = content["camera"]["focusDistance"];
-        const float shutterStart = content["camera"]["shutterStart"];
-        const float shutterEnd = content["camera"]["shutterEnd"];
+        const float shutterStart  = content["camera"]["shutterStart"];
+        const float shutterEnd    = content["camera"]["shutterEnd"];
 
-        Camera camera(lookFrom, lookAt, upDirection, verticalFov, aspect, aperture, focusDistance, shutterStart,
-                      shutterEnd);
+        Camera camera(
+            lookFrom, lookAt, upDirection, verticalFov, aspect, aperture, focusDistance, shutterStart, shutterEnd);
         return std::make_pair(config, camera);
     }
 };
 
-#endif // MONTE_CARLO_RAY_TRACER_CONFIGLOADER_HPP
+#endif  // MONTE_CARLO_RAY_TRACER_CONFIGLOADER_HPP
