@@ -9,7 +9,7 @@
 #include <glm/gtx/transform.hpp>
 
 #include "../BoundedVolumnHierarchy/BvhLeaf.hpp"
-#include "../Utils.hpp"
+#include "../common/Utils.hpp"
 #include "Hitable.hpp"
 
 class Triangle : public Hitable {
@@ -23,7 +23,7 @@ class Triangle : public Hitable {
     [[nodiscard]] std::optional<HitRecord> HitBy(const Ray &ray, float tMin, float tMax) const override {
         const auto pVec = glm::cross(ray.GetDirection(), _edge13);
         const auto det = glm::dot(_edge12, pVec);
-        const auto epsilon = Utils::Epsilon;
+        const auto epsilon = Epsilon;
         if (det > -epsilon && det < epsilon)
             return {};
         const auto invDet = 1 / det;
@@ -57,8 +57,8 @@ class Triangle : public Hitable {
         // in case of equal
         auto adjust = [=](auto &val1, auto &val2) {
             if (val1 == val2) {
-                val1 -= Utils::Epsilon;
-                val2 += Utils::Epsilon;
+                val1 -= Epsilon;
+                val2 += Epsilon;
             }
         };
         adjust(xMin, xMax);

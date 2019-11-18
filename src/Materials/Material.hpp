@@ -8,9 +8,9 @@
 #include <optional>
 #include <utility>
 
-#include "../Aliases.hpp"
 #include "../Hitables/HitRecord.hpp"
-#include "../Ray.hpp"
+#include "../common/Ray.hpp"
+#include "../common/Typing.hpp"
 
 class HitRecord;
 

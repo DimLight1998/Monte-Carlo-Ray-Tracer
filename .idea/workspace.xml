@@ -17,7 +17,29 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="" />
+    <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/common/Typing.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Aliases.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/Bvh.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/Bvh.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/BvhEmpty.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/BvhEmpty.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Camera.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Camera.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/AlignedBox.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hitables/AlignedBox.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/Hitable.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hitables/Hitable.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/Sphere.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hitables/Sphere.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/Triangle.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hitables/Triangle.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/Glass.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Materials/Glass.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/Lambertian.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Materials/Lambertian.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/Material.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Materials/Material.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/Metal.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Materials/Metal.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/Smoke.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Materials/Smoke.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Ray.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Ray.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rendering/ConfigLoader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rendering/ConfigLoader.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rendering/RenderingEngine.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rendering/RenderingEngine.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Textures/Texture.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Textures/Texture.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utils.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Utils.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,20 +77,21 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.advertisement.text.has.clang-format" value="true" />
     <property name="cf.advertisement.text.overridden" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="last_opened_file_path" value="$USER_HOME$/.clang-format" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+    <property name="settings.editor.selected.configurable" value="language.cpp.clangd" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/common" />
       <recent name="$PROJECT_DIR$/bin" />
       <recent name="$PROJECT_DIR$/src/Rendering" />
       <recent name="$PROJECT_DIR$/src/Hitables" />
-      <recent name="$PROJECT_DIR$/src" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
@@ -106,6 +129,9 @@
       <workItem from="1571907115685" duration="23431000" />
       <workItem from="1571985877694" duration="20526000" />
       <workItem from="1572060371339" duration="12707000" />
+      <workItem from="1574057889837" duration="2406000" />
+      <workItem from="1574062116725" duration="128000" />
+      <workItem from="1574062404132" duration="1004000" />
     </task>
     <servers />
   </component>

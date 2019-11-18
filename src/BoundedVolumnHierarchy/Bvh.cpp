@@ -22,7 +22,7 @@ std::unique_ptr<BVH> BVH::BuildBVH(std::vector<std::shared_ptr<const Hitable>> &
         const auto &item = hitables[lo].get();
         return item->BuildBVH();
     } else {
-        const auto axisIndex = Utils::RandomIntBetween(0, 2);
+        const auto axisIndex = RandomIntegerBetween(0, 2);
         if (axisIndex == 0) {
             std::sort(
                 hitables.begin() + lo, hitables.begin() + hi,

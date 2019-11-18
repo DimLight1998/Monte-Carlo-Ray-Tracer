@@ -5,7 +5,7 @@
 #ifndef MONTE_CARLO_RAY_TRACER_TEXTURE_HPP
 #define MONTE_CARLO_RAY_TRACER_TEXTURE_HPP
 
-#include "../Aliases.hpp"
+#include "../common/Typing.hpp"
 
 class Texture {
   public:

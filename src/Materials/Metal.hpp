@@ -5,8 +5,8 @@
 #ifndef MONTE_CARLO_RAY_TRACER_METAL_HPP
 #define MONTE_CARLO_RAY_TRACER_METAL_HPP
 
-#include "../Aliases.hpp"
-#include "../Utils.hpp"
+#include "../common/Typing.hpp"
+#include "../common/Utils.hpp"
 #include "Material.hpp"
 
 class Metal : public Material {
@@ -16,7 +16,7 @@ class Metal : public Material {
     [[nodiscard]] std::optional<std::pair<Attenuation, Ray>> Scattered(const Ray &ray,
                                                                        const HitRecord &hitRecord) const override {
         const auto reflectDirection = glm::reflect(glm::normalize(ray.GetDirection()), hitRecord.GetNorm());
-        const auto scatterDirection = reflectDirection + _fuzziness * Utils::RandomPointInUnitSphere();
+        const auto scatterDirection = reflectDirection + _fuzziness * RandomPointInUnitSphere();
         if (glm::dot(reflectDirection, hitRecord.GetNorm()) > 0) {
             const auto scatterRay = Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted());
             return {{_attenuation, scatterRay}};

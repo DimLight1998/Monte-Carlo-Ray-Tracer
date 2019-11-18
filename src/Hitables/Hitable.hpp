@@ -6,7 +6,7 @@
 #define MONTE_CARLO_RAY_TRACER_HITABLE_HPP
 
 #include "../BoundedVolumnHierarchy/Bvh.hpp"
-#include "../Ray.hpp"
+#include "../common/Ray.hpp"
 #include "AlignedBox.hpp"
 #include "HitRecord.hpp"
 

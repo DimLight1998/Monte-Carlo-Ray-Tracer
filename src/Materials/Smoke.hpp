@@ -6,7 +6,7 @@
 #define MONTE_CARLO_RAY_TRACER_SMOKE_HPP
 
 #include "../Textures/Texture.hpp"
-#include "../Utils.hpp"
+#include "../common/Utils.hpp"
 #include "Material.hpp"
 
 class Smoke : public Material {
@@ -16,7 +16,7 @@ class Smoke : public Material {
     [[nodiscard]] std::optional<std::pair<Attenuation, Ray>> Scattered(const Ray &ray,
                                                                        const HitRecord &hitRecord) const override {
         const auto attenuation = _texture->GetTextureColorAt(hitRecord.GetUv(), hitRecord.GetLocation());
-        const auto scatterDirection = Utils::RandomPointInUnitSphere();
+        const auto scatterDirection = RandomPointInUnitSphere();
         return {{attenuation, Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted())}};
     }
 

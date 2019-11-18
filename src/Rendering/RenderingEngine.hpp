@@ -8,9 +8,9 @@
 #include <numeric>
 #include <vector>
 
-#include "../Aliases.hpp"
 #include "../BoundedVolumnHierarchy/Bvh.hpp"
 #include "../Hitables/Hitable.hpp"
+#include "../common/Typing.hpp"
 
 class RenderingEngine {
   public:
@@ -36,8 +36,8 @@ class RenderingEngine {
   private:
     constexpr static Color Black = {0, 0, 0};
     constexpr static Color DEBUG_ONLY_SKY = {0.9, 1.0, 1.0};
-    constexpr static float RayHitMin = Utils::Epsilon;
-    constexpr static float RayHitMax = Utils::PosInfinity;
+    constexpr static float RayHitMin = Epsilon;
+    constexpr static float RayHitMax = PosInfinity;
 };
 
 #endif // MONTE_CARLO_RAY_TRACER_RENDERINGENGINE_HPP

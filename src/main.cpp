@@ -32,8 +32,8 @@ int main() {
         for (auto i = 0; i < width; i++) {
 #pragma omp parallel for default(none) shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data, skyColor)
             for (auto j = 0; j < height; j++) {
-                const auto x = Utils::RandomFloatBetween((i - 0.5f) / width, (i + 0.5f) / width);
-                const auto y = Utils::RandomFloatBetween((j - 0.5f) / height, (j + 0.5f) / height);
+                const auto x = RandomFloatBetween((i - 0.5f) / width, (i + 0.5f) / width);
+                const auto y = RandomFloatBetween((j - 0.5f) / height, (j + 0.5f) / height);
                 Ray ray = camera.GetEmittedRay(x, y);
                 const auto color = RenderingEngine::GetRayColor(bvh, ray, maxDepth, skyColor);
                 const auto index = ((height - 1 - j) * width + i) * 3;

@@ -5,16 +5,16 @@
 #ifndef MONTE_CARLO_RAY_TRACER_ALIGNEDBOX_HPP
 #define MONTE_CARLO_RAY_TRACER_ALIGNEDBOX_HPP
 
-#include "../Ray.hpp"
-#include "../Utils.hpp"
+#include "../common/Ray.hpp"
+#include "../common/Utils.hpp"
 #include <iostream>
 #include <sstream>
 
 class AlignedBox {
   public:
     AlignedBox() {
-        const auto max = Utils::PosInfinity;
-        const auto min = -Utils::NegInfinity;
+        const auto max = PosInfinity;
+        const auto min = -NegInfinity;
         _xMin = max;
         _xMax = min;
         _yMin = max;

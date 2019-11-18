@@ -5,7 +5,7 @@
 #ifndef MONTE_CARLO_RAY_TRACER_CONFIGLOADER_HPP
 #define MONTE_CARLO_RAY_TRACER_CONFIGLOADER_HPP
 
-#include "../Camera.hpp"
+#include "../common/Camera.hpp"
 #include <fstream>
 #include <json/json.hpp>
 
