@@ -21,6 +21,7 @@
 #include "../Materials/LightSource.hpp"
 #include "../Materials/Metal.hpp"
 #include "../Textures/ConstantColor.hpp"
+#include "../Textures/DiffuseMapping.hpp"
 
 using json = nlohmann::json;
 
@@ -60,6 +61,9 @@ class SceneLoader {
             const auto& colorArray = textureJson["color"];
             Color       color { colorArray[0], colorArray[1], colorArray[2] };
             return { name, std::make_shared<ConstantColor>(color) };
+        } else if (type == "diffuseMapping") {
+            const std::string imagePath = textureJson["imagePath"];
+            return { name, std::make_shared<DiffuseMapping>(imagePath) };
         }
         throw std::runtime_error("unknown texture type");
     }

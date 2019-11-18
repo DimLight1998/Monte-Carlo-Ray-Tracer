@@ -5,10 +5,12 @@
 #ifndef MONTE_CARLO_RAY_TRACER_HITABLE_HPP
 #define MONTE_CARLO_RAY_TRACER_HITABLE_HPP
 
-#include "../BoundedVolumnHierarchy/Bvh.hpp"
-#include "../common/Ray.hpp"
 #include "AlignedBox.hpp"
 #include "HitRecord.hpp"
+
+#include "../BoundedVolumnHierarchy/Bvh.hpp"
+#include "../common/Ray.hpp"
+
 
 class BVH;
 

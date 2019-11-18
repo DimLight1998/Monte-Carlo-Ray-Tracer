@@ -1,8 +1,0 @@
-//
-// Created by zhang on 10/23/19.
-//
-
-#ifndef MONTE_CARLO_RAY_TRACER_IMAGE_HPP
-#define MONTE_CARLO_RAY_TRACER_IMAGE_HPP
-
-#endif  // MONTE_CARLO_RAY_TRACER_IMAGE_HPP
