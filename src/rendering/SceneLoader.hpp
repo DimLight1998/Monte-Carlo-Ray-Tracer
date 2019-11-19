@@ -11,17 +11,17 @@
 
 #include <json/json.hpp>
 
-#include "../Hitables/Hitable.hpp"
-#include "../Hitables/Mesh.hpp"
-#include "../Hitables/Prefabs/Cube.hpp"
-#include "../Hitables/Prefabs/Rectangle.hpp"
-#include "../Hitables/Sphere.hpp"
-#include "../Materials/Glass.hpp"
-#include "../Materials/Lambertian.hpp"
-#include "../Materials/LightSource.hpp"
-#include "../Materials/Metal.hpp"
-#include "../Textures/ConstantColor.hpp"
-#include "../Textures/DiffuseMapping.hpp"
+#include "../hitables/Hitable.hpp"
+#include "../hitables/Mesh.hpp"
+#include "../hitables/prefabs/Cube.hpp"
+#include "../hitables/prefabs/Rectangle.hpp"
+#include "../hitables/Sphere.hpp"
+#include "../materials/Glass.hpp"
+#include "../materials/Lambertian.hpp"
+#include "../materials/LightSource.hpp"
+#include "../materials/Metal.hpp"
+#include "../textures/ConstantColor.hpp"
+#include "../textures/DiffuseMapping.hpp"
 
 using json = nlohmann::json;
 

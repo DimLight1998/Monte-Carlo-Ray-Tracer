@@ -6,9 +6,9 @@
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 
-#include "Rendering/ConfigLoader.hpp"
-#include "Rendering/RenderingEngine.hpp"
-#include "Rendering/SceneLoader.hpp"
+#include "rendering/ConfigLoader.hpp"
+#include "rendering/RenderingEngine.hpp"
+#include "rendering/SceneLoader.hpp"
 
 using namespace std;
 

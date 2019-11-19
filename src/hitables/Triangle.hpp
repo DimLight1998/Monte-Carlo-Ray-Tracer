@@ -8,7 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include "../BoundedVolumnHierarchy/BvhLeaf.hpp"
+#include "../bounded-volumn-hierarchy/BvhLeaf.hpp"
 #include "../common/Utils.hpp"
 #include "Hitable.hpp"
 

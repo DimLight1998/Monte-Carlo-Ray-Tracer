@@ -7,8 +7,8 @@
 
 #include <vector>
 
-#include "../Hitables/HitRecord.hpp"
-#include "../Hitables/Hitable.hpp"
+#include "../hitables/HitRecord.hpp"
+#include "../hitables/Hitable.hpp"
 
 class BVH {
     public:

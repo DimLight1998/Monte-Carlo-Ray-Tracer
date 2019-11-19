@@ -5,7 +5,7 @@
 #ifndef MONTE_CARLO_RAY_TRACER_LIGHTSOURCE_HPP
 #define MONTE_CARLO_RAY_TRACER_LIGHTSOURCE_HPP
 
-#include "../Textures/Texture.hpp"
+#include "../textures/Texture.hpp"
 #include "Material.hpp"
 
 class LightSource: public Material {

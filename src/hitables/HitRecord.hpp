@@ -9,7 +9,7 @@
 #include <memory>
 #include <utility>
 
-#include "../Materials/Material.hpp"
+#include "../materials/Material.hpp"
 
 class Material;
 

@@ -8,7 +8,7 @@
 #include <optional>
 #include <utility>
 
-#include "../Hitables/HitRecord.hpp"
+#include "../hitables/HitRecord.hpp"
 #include "../common/Ray.hpp"
 #include "../common/Typing.hpp"
 

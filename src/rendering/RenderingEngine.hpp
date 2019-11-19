@@ -8,9 +8,9 @@
 #include <numeric>
 #include <vector>
 
-#include "../BoundedVolumnHierarchy/Bvh.hpp"
-#include "../Hitables/Hitable.hpp"
+#include "../bounded-volumn-hierarchy/Bvh.hpp"
 #include "../common/Typing.hpp"
+#include "../hitables/Hitable.hpp"
 
 class RenderingEngine {
     public:

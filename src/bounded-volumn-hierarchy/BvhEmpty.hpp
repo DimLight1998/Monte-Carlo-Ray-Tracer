@@ -5,9 +5,10 @@
 #ifndef MONTE_CARLO_RAY_TRACER_BVHEMPTY_HPP
 #define MONTE_CARLO_RAY_TRACER_BVHEMPTY_HPP
 
+#include <optional>
+
 #include "../common/Ray.hpp"
 #include "Bvh.hpp"
-#include <optional>
 
 class BVH;
 

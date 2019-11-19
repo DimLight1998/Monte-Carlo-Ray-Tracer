@@ -5,7 +5,7 @@
 #ifndef MONTE_CARLO_RAY_TRACER_SPHERE_HPP
 #define MONTE_CARLO_RAY_TRACER_SPHERE_HPP
 
-#include "../BoundedVolumnHierarchy/BvhLeaf.hpp"
+#include "../bounded-volumn-hierarchy/BvhLeaf.hpp"
 #include "../common/Geometry.hpp"
 #include "../common/Utils.hpp"
 #include "Hitable.hpp"

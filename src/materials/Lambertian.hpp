@@ -5,7 +5,7 @@
 #ifndef MONTE_CARLO_RAY_TRACER_LAMBERTIAN_HPP
 #define MONTE_CARLO_RAY_TRACER_LAMBERTIAN_HPP
 
-#include "../Textures/Texture.hpp"
+#include "../textures/Texture.hpp"
 #include "../common/Utils.hpp"
 #include "Material.hpp"
 

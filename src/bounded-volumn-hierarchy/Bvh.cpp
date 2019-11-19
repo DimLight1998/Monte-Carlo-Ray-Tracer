@@ -9,7 +9,7 @@
 #include "BvhEmpty.hpp"
 #include "BvhNode.hpp"
 
-#include "../Hitables/Hitable.hpp"
+#include "../hitables/Hitable.hpp"
 
 std::unique_ptr<BVH> BVH::BuildBVH(const std::vector<std::shared_ptr<const Hitable>>& hitables) {
     auto copy = hitables;

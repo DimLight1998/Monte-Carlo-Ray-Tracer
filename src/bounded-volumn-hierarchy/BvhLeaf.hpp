@@ -5,8 +5,8 @@
 #ifndef MONTE_CARLO_RAY_TRACER_BVHLEAF_HPP
 #define MONTE_CARLO_RAY_TRACER_BVHLEAF_HPP
 
-#include "../Hitables/AlignedBox.hpp"
-#include "../Hitables/Hitable.hpp"
+#include "../hitables/AlignedBox.hpp"
+#include "../hitables/Hitable.hpp"
 #include "Bvh.hpp"
 
 class BVHLeaf: public BVH {

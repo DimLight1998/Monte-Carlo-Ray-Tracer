@@ -8,7 +8,7 @@
 #include "AlignedBox.hpp"
 #include "HitRecord.hpp"
 
-#include "../BoundedVolumnHierarchy/Bvh.hpp"
+#include "../bounded-volumn-hierarchy/Bvh.hpp"
 #include "../common/Ray.hpp"
 
 class BVH;

@@ -17,7 +17,36 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="" />
+    <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/Bvh.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/bounded-volumn-hierarchy/Bvh.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/Bvh.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/bounded-volumn-hierarchy/Bvh.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/BvhEmpty.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/bounded-volumn-hierarchy/BvhEmpty.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/BvhLeaf.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/bounded-volumn-hierarchy/BvhLeaf.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BoundedVolumnHierarchy/BvhNode.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/bounded-volumn-hierarchy/BvhNode.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/AlignedBox.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/AlignedBox.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/HitRecord.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/HitRecord.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/Hitable.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Hitable.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/Mesh.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Mesh.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/Prefabs/Cube.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/prefabs/Cube.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/Prefabs/Rectangle.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/prefabs/Rectangle.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/Sphere.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Sphere.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hitables/Triangle.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Triangle.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/Glass.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Glass.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/Lambertian.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Lambertian.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/LightSource.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/LightSource.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/Material.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Material.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/Metal.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Metal.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Materials/Smoke.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Smoke.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rendering/ConfigLoader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/ConfigLoader.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rendering/RenderingEngine.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rendering/SceneLoader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/SceneLoader.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Textures/Checker.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/textures/Checker.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Textures/ConstantColor.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/textures/ConstantColor.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Textures/DiffuseMapping.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/textures/DiffuseMapping.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Textures/PerlinNoise.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/textures/PerlinNoise.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Textures/Texture.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/textures/Texture.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,12 +61,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/Materials/LightSource.hpp" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/Materials/Lambertian.hpp" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/BoundedVolumnHierarchy/BvhLeaf.hpp" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/Rendering/ConfigLoader.hpp" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/Hitables/Sphere.hpp" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/Hitables/Mesh.hpp" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/materials/LightSource.hpp" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/materials/Lambertian.hpp" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/bounded-volumn-hierarchy/BvhLeaf.hpp" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/rendering/ConfigLoader.hpp" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/hitables/Sphere.hpp" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/hitables/Mesh.hpp" root0="SKIP_INSPECTION" />
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="BrmbpYsR" />
@@ -62,14 +91,14 @@
     <property name="settings.editor.selected.configurable" value="language.cpp.clangd" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/common" />
       <recent name="$PROJECT_DIR$/bin" />
       <recent name="$PROJECT_DIR$/src/Rendering" />
       <recent name="$PROJECT_DIR$/src/Hitables" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
