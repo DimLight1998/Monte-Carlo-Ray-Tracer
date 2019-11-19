@@ -5,13 +5,14 @@
 #ifndef MONTE_CARLO_RAY_TRACER_SMOKE_HPP
 #define MONTE_CARLO_RAY_TRACER_SMOKE_HPP
 
-#include "../textures/Texture.hpp"
 #include "../common/Utils.hpp"
+#include "../textures/Texture.hpp"
 #include "Material.hpp"
 
 class Smoke: public Material {
     public:
-    explicit Smoke(const std::shared_ptr<Texture>& texture): _texture(texture) {}
+    explicit Smoke(const std::shared_ptr<Texture>& texture, float density)
+        : _density { density }, _texture { texture } {}
 
     [[nodiscard]] std::optional<std::pair<Attenuation, Ray>>
     Scattered(const Ray& ray, const HitRecord& hitRecord) const override {
@@ -20,8 +21,13 @@ class Smoke: public Material {
         return { { attenuation, Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted()) } };
     }
 
+    [[nodiscard]] float GetDensity() const {
+        return _density;
+    }
+
     private:
-    const std::shared_ptr<Texture>& _texture;
+    const float                    _density;
+    const std::shared_ptr<Texture> _texture;
 };
 
 #endif  // MONTE_CARLO_RAY_TRACER_SMOKE_HPP

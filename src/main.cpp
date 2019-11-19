@@ -30,7 +30,7 @@ int main() {
 
     for (auto n = 0; n < numSamples; n++) {
         for (auto i = 0; i < width; i++) {
-#pragma omp parallel for default(none) shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data, skyColor)
+//#pragma omp parallel for default(none) shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data, skyColor)
             for (auto j = 0; j < height; j++) {
                 const auto x     = RandomFloatBetween((i - 0.5f) / width, (i + 0.5f) / width);
                 const auto y     = RandomFloatBetween((j - 0.5f) / height, (j + 0.5f) / height);

@@ -13,13 +13,15 @@
 
 #include "../hitables/Hitable.hpp"
 #include "../hitables/Mesh.hpp"
+#include "../hitables/SmokeWrapper.hpp"
+#include "../hitables/Sphere.hpp"
 #include "../hitables/prefabs/Cube.hpp"
 #include "../hitables/prefabs/Rectangle.hpp"
-#include "../hitables/Sphere.hpp"
 #include "../materials/Glass.hpp"
 #include "../materials/Lambertian.hpp"
 #include "../materials/LightSource.hpp"
 #include "../materials/Metal.hpp"
+#include "../materials/Smoke.hpp"
 #include "../textures/ConstantColor.hpp"
 #include "../textures/DiffuseMapping.hpp"
 
@@ -91,6 +93,11 @@ class SceneLoader {
             const std::string textureName = materialJson["texture"];
             const auto&       texture     = textureMap.at(textureName);
             return { name, std::make_shared<LightSource>(texture) };
+        } else if (type == "smoke") {
+            const std::string textureName = materialJson["texture"];
+            const auto&       texture     = textureMap.at(textureName);
+            const float       density     = materialJson["density"];
+            return { name, std::make_shared<Smoke>(texture, density) };
         }
         throw std::runtime_error("unknown material type");
     }
@@ -166,6 +173,11 @@ class SceneLoader {
                 LoadAndPerformTransformation(rectangle, transformation);
             }
             return rectangle;
+        } else if (type == "smokeWrapper") {
+            const auto wrapped       = LoadHitable(materialMap, hitableJson["wrapping"]);
+            const auto smokeMaterial = std::dynamic_pointer_cast<Smoke>(material);
+            if (smokeMaterial == nullptr) throw std::runtime_error("smoke wrapper with material not being smoke");
+            return std::make_shared<SmokeWrapper>(wrapped, smokeMaterial);
         }
         throw std::runtime_error("unknown hitable type");
     }
