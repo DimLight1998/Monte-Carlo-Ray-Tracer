@@ -11,7 +11,6 @@
 #include "../BoundedVolumnHierarchy/Bvh.hpp"
 #include "../common/Ray.hpp"
 
-
 class BVH;
 
 class Hitable: public std::enable_shared_from_this<Hitable> {
