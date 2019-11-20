@@ -40,3 +40,13 @@ glm::vec3 RandomPointInUnitSphere() {
         }
     }
 }
+
+Direction RandomCosineDirection() {
+    const auto r1  = RandomFloatBetween(0, 1);
+    const auto r2  = RandomFloatBetween(0, 1);
+    const auto z   = std::sqrt(1 - r2);
+    const auto phi = 2 * Pi * r1;
+    const auto x   = std::cos(phi) * 2 * std::sqrt(r2);
+    const auto y   = std::sin(phi) * 2 * std::sqrt(r2);
+    return { x, y, z };
+}

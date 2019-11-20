@@ -19,12 +19,13 @@
   <component name="ChangeListManager">
     <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/materials/Glass.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Glass.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Utils.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Utils.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Utils.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hitables/AlignedBox.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/AlignedBox.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hitables/Hitable.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Hitable.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hitables/Mesh.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Mesh.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hitables/Triangle.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Triangle.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/materials/Lambertian.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Lambertian.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/materials/LightSource.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/LightSource.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/materials/Material.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Material.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/materials/Metal.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Metal.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/materials/Smoke.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Smoke.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -71,15 +72,15 @@
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pdf" />
       <recent name="$PROJECT_DIR$/src/common" />
       <recent name="$PROJECT_DIR$/bin" />
       <recent name="$PROJECT_DIR$/src/Rendering" />
       <recent name="$PROJECT_DIR$/src/Hitables" />
-      <recent name="$PROJECT_DIR$/src" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -119,7 +120,7 @@
       <workItem from="1574057889837" duration="2406000" />
       <workItem from="1574062116725" duration="128000" />
       <workItem from="1574062404132" duration="4025000" />
-      <workItem from="1574250452288" duration="3737000" />
+      <workItem from="1574250452288" duration="13584000" />
     </task>
     <servers />
   </component>

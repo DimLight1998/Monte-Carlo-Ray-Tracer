@@ -6,6 +6,7 @@
 #define MONTE_CARLO_RAY_TRACER_TRIANGLE_HPP
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/norm.hpp>
 #include <glm/gtx/transform.hpp>
 
 #include "../bounded-volumn-hierarchy/BvhLeaf.hpp"
@@ -115,6 +116,28 @@ class Triangle: public Hitable {
         _vertex3 *= scale;
         _edge12 *= scale;
         _edge13 *= scale;
+    }
+
+    [[nodiscard]] std::pair<Direction, float> GetRandomDirectionWithPDF(const Location& origin) const override {
+        auto x = RandomFloatBetween(Epsilon, 1 - Epsilon);
+        auto y = RandomFloatBetween(Epsilon, 1 - Epsilon);
+        if (x + y > 1) {
+            x = 1 - Epsilon - x;
+            y = 1 - Epsilon - y;
+        }
+        const auto point     = x * _edge12 + y * _edge13 + _vertex1;
+        const auto direction = point - origin;
+
+        const auto maybeHitRecord = HitBy(Ray { origin, direction, 0 }, Epsilon, PosInfinity);
+        if (maybeHitRecord) {
+            const auto& hitRecord       = maybeHitRecord.value();
+            const auto  area            = glm::length(glm::cross(_edge12, _edge13)) / 2;
+            const auto  distanceSquared = hitRecord.GetT() * hitRecord.GetT() * glm::length2(direction);
+            const auto  cosine          = std::abs(glm::dot(direction, hitRecord.GetNorm()) / glm::length(direction));
+            return { direction, distanceSquared / (cosine * area) };
+        } else {
+            return { direction, 0 };
+        }
     }
 
     private:

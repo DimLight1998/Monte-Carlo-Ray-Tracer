@@ -138,6 +138,12 @@ class Mesh: public Hitable {
         return ss.str();
     }
 
+    virtual std::pair<Direction, float> GetRandomDirectionWithPDF(const Location& origin) const override {
+        // todo sample from probabilities by areas
+        const auto index = RandomIntegerBetween(0, _triangles.size() - 1);
+        return _triangles[index].GetRandomDirectionWithPDF(origin);
+    }
+
     protected:
     std::vector<Triangle> _triangles;
     AlignedBox            _alignedBoxPrecomputed;

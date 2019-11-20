@@ -49,6 +49,8 @@ glm::vec3 RandomPointOnUnitDisk();
  */
 glm::vec3 RandomPointInUnitSphere();
 
+Direction RandomCosineDirection();
+
 constexpr static float Epsilon     = 0.001;
 constexpr static float Pi          = glm::pi<float>();
 constexpr static float PosInfinity = std::numeric_limits<float>::max();

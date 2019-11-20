@@ -11,6 +11,9 @@
 #include "../bounded-volumn-hierarchy/Bvh.hpp"
 #include "../common/Typing.hpp"
 #include "../hitables/Hitable.hpp"
+#include "../hitables/prefabs/Rectangle.hpp"
+#include "../pdf/CosinePdf.hpp"
+#include "../pdf/HitablePdf.hpp"
 
 class RenderingEngine {
     public:
@@ -22,11 +25,34 @@ class RenderingEngine {
             const auto  scattered = hitRecord.GetMaterial().Scattered(ray, hitRecord);
             const auto  emitted   = hitRecord.GetMaterial().Emitted(hitRecord.GetUv(), hitRecord.GetLocation());
             if (scattered) {
-                const auto scatteredValue = scattered.value();
-                const auto scatteredRay   = scatteredValue.GetRay();
-                return emitted + scatteredValue.GetAttenuation() *
-                                     hitRecord.GetMaterial().GetScatteringPDF(ray, hitRecord, scatteredRay) *
-                                     GetRayColor(bvh, scatteredRay, maxDepth - 1, skyColor);
+                //                const auto onLight                 = glm::vec3 { 213 + RandomFloatBetween(0, 1) * (343 - 213),
+                //                                                 554,
+                //                                                 227 + RandomFloatBetween(0, 1) * (332 - 227) };
+                //                const auto toLight                 = onLight - hitRecord.GetLocation();
+                //                const auto hitLightDistance        = glm::length(toLight);
+                //                const auto hitLightDistanceSquared = hitLightDistance * hitLightDistance;  // todo optimization
+                //                const auto unitToLight             = glm::normalize(toLight);
+                //                if (glm::dot(unitToLight, hitRecord.GetNorm()) < 0) return emitted;
+                //                const auto lightArea   = (343 - 213) * (332 - 227);
+                //                const auto lightCosine = abs(unitToLight.y);
+                //                if (lightCosine < 0.000001) return emitted;
+                //                const auto pdf          = hitLightDistanceSquared / (lightCosine * lightArea);
+                //                const auto scatteredRay = Ray { hitRecord.GetLocation(), unitToLight, ray.GetTimeEmitted() };
+                //
+
+                auto       lightShape        = Rectangle::OfZX(227, 332, 227, 332, 554, false, nullptr);
+                const auto lightShapePointer = std::shared_ptr<Mesh>(&lightShape, [](Rectangle* _) {});
+                HitablePDF p(lightShapePointer, hitRecord.GetLocation());
+
+                //                CosinePDF  p(hitRecord.GetNorm());
+                const auto generatedWithPDF = p.GenerateWithPDF();
+                const auto direction        = generatedWithPDF.first;
+                const auto pdfValue         = generatedWithPDF.second;
+                const auto scatteredRay     = Ray { hitRecord.GetLocation(), direction, ray.GetTimeEmitted() };
+                const auto attenuation      = scattered.value().GetAttenuation();
+                //                const auto scatteredRay = scattered.value().GetRay();
+                return emitted + attenuation * hitRecord.GetMaterial().GetScatteringPDF(ray, hitRecord, scatteredRay) *
+                                     GetRayColor(bvh, scatteredRay, maxDepth - 1, skyColor) / pdfValue;
             } else {
                 return emitted;
             }

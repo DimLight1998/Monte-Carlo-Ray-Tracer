@@ -5,10 +5,12 @@
 #ifndef MONTE_CARLO_RAY_TRACER_ALIGNEDBOX_HPP
 #define MONTE_CARLO_RAY_TRACER_ALIGNEDBOX_HPP
 
-#include "../common/Ray.hpp"
-#include "../common/Utils.hpp"
+#include <algorithm>
 #include <iostream>
 #include <sstream>
+
+#include "../common/Ray.hpp"
+#include "../common/Utils.hpp"
 
 class AlignedBox {
     public:
