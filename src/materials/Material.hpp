@@ -6,11 +6,12 @@
 #define MONTE_CARLO_RAY_TRACER_MATERIAL_HPP
 
 #include <optional>
-#include <utility>
+#include <tuple>
 
-#include "../hitables/HitRecord.hpp"
 #include "../common/Ray.hpp"
 #include "../common/Typing.hpp"
+#include "../common/ScatteredRay.hpp"
+#include "../hitables/HitRecord.hpp"
 
 class HitRecord;
 
@@ -24,8 +25,19 @@ class Material {
      *      Otherwise, the first component is the attenuation to be applied on the scattered ray,
      *      and the second component is the scattered ray.
      */
-    [[nodiscard]] virtual std::optional<std::pair<Attenuation, Ray>>
+    [[nodiscard]] virtual std::optional<ScatteredRay>
     Scattered(const Ray& ray, const HitRecord& hitRecord) const = 0;
+
+    /**
+     * @brief Calculate the PDF of the scattered ray for monte carlo method.
+     * @param rayIn input ray.
+     * @param hitRecord hit record about the input ray.
+     * @param rayScattered the scattered ray.
+     * @return PDF value of the scattered ray.
+     */
+    [[nodiscard]] virtual float GetScatteringPDF(const Ray& rayIn, const HitRecord& hitRecord, const Ray& rayScattered) const {
+        throw std::runtime_error("not implemented");
+    }
 
     /**
      * @brief Calculate emitted color on this material give location of the point.

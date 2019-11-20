@@ -14,11 +14,10 @@ class Smoke: public Material {
     explicit Smoke(const std::shared_ptr<Texture>& texture, float density)
         : _density { density }, _texture { texture } {}
 
-    [[nodiscard]] std::optional<std::pair<Attenuation, Ray>>
-    Scattered(const Ray& ray, const HitRecord& hitRecord) const override {
+    [[nodiscard]] std::optional<ScatteredRay> Scattered(const Ray& ray, const HitRecord& hitRecord) const override {
         const auto attenuation      = _texture->GetTextureColorAt(hitRecord.GetUv(), hitRecord.GetLocation());
         const auto scatterDirection = RandomPointInUnitSphere();
-        return { { attenuation, Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted()) } };
+        return { { attenuation, Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted()), 0.0f } };
     }
 
     [[nodiscard]] float GetDensity() const {

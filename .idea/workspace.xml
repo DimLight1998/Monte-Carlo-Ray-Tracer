@@ -19,9 +19,13 @@
   <component name="ChangeListManager">
     <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/materials/Glass.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Glass.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/materials/Lambertian.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Lambertian.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/materials/LightSource.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/LightSource.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/materials/Material.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Material.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/materials/Metal.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Metal.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/materials/Smoke.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Smoke.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rendering/SceneLoader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/SceneLoader.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,7 +33,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
   <component name="FavoritesManager">
     <favorites_list name="Monte_Carlo_Ray_Tracer" />
   </component>
@@ -64,7 +68,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="editing.templates" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -115,6 +119,7 @@
       <workItem from="1574057889837" duration="2406000" />
       <workItem from="1574062116725" duration="128000" />
       <workItem from="1574062404132" duration="4025000" />
+      <workItem from="1574250452288" duration="3737000" />
     </task>
     <servers />
   </component>

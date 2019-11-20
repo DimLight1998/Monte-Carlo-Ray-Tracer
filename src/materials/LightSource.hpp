@@ -12,7 +12,7 @@ class LightSource: public Material {
     public:
     explicit LightSource(const std::shared_ptr<Texture>& texture): _texture(texture) {}
 
-    [[nodiscard]] std::optional<std::pair<Attenuation, Ray>>
+    [[nodiscard]] std::optional<ScatteredRay>
     Scattered(const Ray& ray, const HitRecord& hitRecord) const override {
         // light doesn't scatter
         return {};

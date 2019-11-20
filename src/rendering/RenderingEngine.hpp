@@ -22,8 +22,11 @@ class RenderingEngine {
             const auto  scattered = hitRecord.GetMaterial().Scattered(ray, hitRecord);
             const auto  emitted   = hitRecord.GetMaterial().Emitted(hitRecord.GetUv(), hitRecord.GetLocation());
             if (scattered) {
-                return emitted +
-                       scattered.value().first * GetRayColor(bvh, scattered.value().second, maxDepth - 1, skyColor);
+                const auto scatteredValue = scattered.value();
+                const auto scatteredRay   = scatteredValue.GetRay();
+                return emitted + scatteredValue.GetAttenuation() *
+                                     hitRecord.GetMaterial().GetScatteringPDF(ray, hitRecord, scatteredRay) *
+                                     GetRayColor(bvh, scatteredRay, maxDepth - 1, skyColor);
             } else {
                 return emitted;
             }
