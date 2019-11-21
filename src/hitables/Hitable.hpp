@@ -30,9 +30,9 @@ class Hitable: public std::enable_shared_from_this<Hitable> {
      */
     [[nodiscard]] virtual std::unique_ptr<BVH> BuildBVH() const = 0;
 
-    [[nodiscard]] virtual std::pair<Direction, float> GetRandomDirectionWithPDF(const Location& origin) const {
-        return { { 1, 0, 0 }, 0 };
-    }
+    [[nodiscard]] virtual Direction GetRandomRayDirection(const Location& origin) const = 0;
+
+    [[nodiscard]] virtual float GetRayPDF(const Location& origin, const Direction& direction) const = 0;
 
     virtual std::string ToString() const {
         return "hitable";

@@ -51,6 +51,10 @@ glm::vec3 RandomPointInUnitSphere();
 
 Direction RandomCosineDirection();
 
+Direction RandomToSphere(float radius, float distanceSquared);
+
+void NormalizeFloat(glm::vec3& vec);
+
 constexpr static float Epsilon     = 0.001;
 constexpr static float Pi          = glm::pi<float>();
 constexpr static float PosInfinity = std::numeric_limits<float>::max();

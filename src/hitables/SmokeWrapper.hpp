@@ -46,6 +46,14 @@ class SmokeWrapper: public Hitable {
         return _hitable->GetAlignedBox();
     }
 
+    Direction GetRandomRayDirection(const Location& origin) const override {
+        return _hitable->GetRandomRayDirection(origin);
+    }
+
+    float GetRayPDF(const Location& origin, const Direction& direction) const override {
+        return _hitable->GetRayPDF(origin, direction);
+    }
+
     std::unique_ptr<BVH> BuildBVH() const override {
         const auto alignedBox = GetAlignedBox();
         return std::make_unique<BVHLeaf>(alignedBox, shared_from_this());

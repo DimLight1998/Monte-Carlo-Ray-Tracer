@@ -132,16 +132,24 @@ class Mesh: public Hitable {
         return *this;
     }
 
-    virtual std::string ToString() const override {
+    std::string ToString() const override {
         std::stringstream ss;
         ss << "mesh of " << _triangles.size() << " triangles";
         return ss.str();
     }
 
-    virtual std::pair<Direction, float> GetRandomDirectionWithPDF(const Location& origin) const override {
-        // todo sample from probabilities by areas
-        const auto index = RandomIntegerBetween(0, _triangles.size() - 1);
-        return _triangles[index].GetRandomDirectionWithPDF(origin);
+    Direction GetRandomRayDirection(const Location& origin) const override {
+        const auto index = RandomIntegerBetween(0, static_cast<int>(_triangles.size()) - 1);
+        return _triangles[index].GetRandomRayDirection(origin);
+    }
+
+    float GetRayPDF(const Location& origin, const Direction& direction) const override {
+        const auto weight = 1.0f / _triangles.size();
+        auto       sum    = 0.0f;
+        for (const auto& triangle : _triangles) {
+            sum += weight * triangle.GetRayPDF(origin, direction);
+        }
+        return sum;
     }
 
     protected:

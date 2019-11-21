@@ -70,6 +70,22 @@ class Sphere: public Hitable {
         return std::make_unique<BVHLeaf>(alignedBox, shared_from_this());
     }
 
+    virtual Direction GetRandomRayDirection(const Location& origin) const override {
+        const auto direction       = _center - origin;
+        const auto distanceSquared = glm::length2(direction);
+        const auto bases           = OrthoNormalBases::BuildFromW(direction);
+        const auto randomDirection = RandomToSphere(_radius, distanceSquared);
+        return bases.GetLocalLocation(randomDirection);
+    }
+
+    virtual float GetRayPDF(const Location& origin, const Direction& direction) const override {
+        const auto maybeHitRecord = HitBy({ origin, direction, 0 }, Epsilon, PosInfinity);
+        if (!maybeHitRecord) return 0;
+        const auto cosThetaMax = std::sqrt(1 - _radius * _radius / glm::length2(_center - origin));
+        const auto solidAngle  = 2 * Pi * (1 - cosThetaMax);
+        return 1 / solidAngle;
+    }
+
     virtual std::string ToString() const override {
         std::stringstream ss;
         ss << "sphere of " << _radius;

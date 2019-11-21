@@ -46,7 +46,23 @@ Direction RandomCosineDirection() {
     const auto r2  = RandomFloatBetween(0, 1);
     const auto z   = std::sqrt(1 - r2);
     const auto phi = 2 * Pi * r1;
-    const auto x   = std::cos(phi) * 2 * std::sqrt(r2);
-    const auto y   = std::sin(phi) * 2 * std::sqrt(r2);
+    const auto x   = std::cos(phi) * std::sqrt(r2);
+    const auto y   = std::sin(phi) * std::sqrt(r2);
     return { x, y, z };
+}
+
+Direction RandomToSphere(float radius, float distanceSquared) {
+    const auto r1  = RandomFloatBetween(0, 1);
+    const auto r2  = RandomFloatBetween(0, 1);
+    const auto z   = 1 + r2 * (std::sqrt(1 - radius * radius / distanceSquared) - 1);
+    const auto phi = 2 * Pi * r1;
+    const auto x   = std::cos(phi) * std::sqrt(1 - z * z);
+    const auto y   = std::sin(phi) * std::sqrt(1 - z * z);
+    return { x, y, z };
+}
+
+void NormalizeFloat(glm::vec3& vec) {
+    if (std::isnan(vec.x) || std::isinf(vec.x)) vec.x = 0.5;
+    if (std::isnan(vec.y) || std::isinf(vec.y)) vec.y = 0.5;
+    if (std::isnan(vec.z) || std::isinf(vec.z)) vec.z = 0.5;
 }

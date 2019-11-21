@@ -21,11 +21,15 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Utils.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Utils.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Utils.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hitables/AlignedBox.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/AlignedBox.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hitables/Hitable.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Hitable.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hitables/Mesh.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Mesh.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hitables/SmokeWrapper.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/SmokeWrapper.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hitables/Sphere.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Sphere.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hitables/Triangle.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Triangle.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/materials/Lambertian.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Lambertian.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pdf/CosinePdf.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/pdf/CosinePdf.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pdf/HitablePdf.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/pdf/HitablePdf.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pdf/Pdf.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/pdf/Pdf.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -47,7 +51,7 @@
     <setting file="file://$PROJECT_DIR$/src/bounded-volumn-hierarchy/BvhLeaf.hpp" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/rendering/ConfigLoader.hpp" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/hitables/Sphere.hpp" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/hitables/Mesh.hpp" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/hitables/Mesh.hpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="BrmbpYsR" />
@@ -120,7 +124,10 @@
       <workItem from="1574057889837" duration="2406000" />
       <workItem from="1574062116725" duration="128000" />
       <workItem from="1574062404132" duration="4025000" />
-      <workItem from="1574250452288" duration="13584000" />
+      <workItem from="1574250452288" duration="13694000" />
+      <workItem from="1574296537371" duration="1884000" />
+      <workItem from="1574320535058" duration="310000" />
+      <workItem from="1574331432983" duration="10385000" />
     </task>
     <servers />
   </component>

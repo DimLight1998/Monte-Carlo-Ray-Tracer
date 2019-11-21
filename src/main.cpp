@@ -30,7 +30,7 @@ int main() {
 
     for (auto n = 0; n < numSamples; n++) {
         for (auto i = 0; i < width; i++) {
-//#pragma omp parallel for default(none) shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data, skyColor)
+#pragma omp parallel for default(none) shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data, skyColor)
             for (auto j = 0; j < height; j++) {
                 const auto x     = RandomFloatBetween((i - 0.5f) / width, (i + 0.5f) / width);
                 const auto y     = RandomFloatBetween((j - 0.5f) / height, (j + 0.5f) / height);
@@ -38,9 +38,9 @@ int main() {
                 const auto color = RenderingEngine::GetRayColor(bvh, ray, maxDepth, skyColor);
                 const auto index = ((height - 1 - j) * width + i) * 3;
 
-                dataSum[index + 0] += color.b;
-                dataSum[index + 1] += color.g;
-                dataSum[index + 2] += color.r;
+                dataSum[index + 0] += std::clamp(color.b, 0.0f, 1.0f);
+                dataSum[index + 1] += std::clamp(color.g, 0.0f, 1.0f);
+                dataSum[index + 2] += std::clamp(color.r, 0.0f, 1.0f);
                 data[index + 0] = std::clamp(glm::sqrt(dataSum[index + 0] / (n + 1)) * 256, 0.0l, 255.99l);
                 data[index + 1] = std::clamp(glm::sqrt(dataSum[index + 1] / (n + 1)) * 256, 0.0l, 255.99l);
                 data[index + 2] = std::clamp(glm::sqrt(dataSum[index + 2] / (n + 1)) * 256, 0.0l, 255.99l);
@@ -50,6 +50,7 @@ int main() {
         const auto mat = cv::Mat(height, width, CV_8UC3, data.data());  // NOLINT(hicpp-signed-bitwise)
         cv::imshow("display", mat);
         cv::waitKey(1);
+        cout << (n + 1) << " samples finished" << endl;
     }
 
     const auto         t  = std::time(nullptr);

@@ -53,19 +53,24 @@ class OrthoNormalBases {
 
 class CosinePDF: public PDF {
     public:
-    CosinePDF(const Direction& w);
-    [[nodiscard]] std::pair<Direction, float> GenerateWithPDF() const override;
+    explicit CosinePDF(const Direction& w);
+    [[nodiscard]] float     GetPDFValue(const Direction& direction) const override;
+    [[nodiscard]] Direction GenerateRayDirection() const override;
 
     private:
     OrthoNormalBases _bases;
 };
 
-std::pair<Direction, float> CosinePDF::GenerateWithPDF() const {
-    const auto direction = _bases.GetLocalLocation(RandomCosineDirection());
-    const auto cosine    = glm::dot(glm::normalize(direction), _bases.GetW());
-    return { direction, cosine > 0 ? cosine / Pi : 0 };
+CosinePDF::CosinePDF(const Direction& w): _bases { OrthoNormalBases::BuildFromW(w) } {}
+
+float CosinePDF::GetPDFValue(const Direction& direction) const {
+    const auto cosine = glm::dot(glm::normalize(direction), _bases.GetW());
+
+    return cosine > 0.0f ? (cosine / Pi) : 0.0f;
 }
 
-CosinePDF::CosinePDF(const Direction& w): _bases { OrthoNormalBases::BuildFromW(w) } {}
+Direction CosinePDF::GenerateRayDirection() const {
+    return _bases.GetLocalLocation(RandomCosineDirection());
+}
 
 #endif  //MONTE_CARLO_RAY_TRACER_COSINEPDF_HPP
