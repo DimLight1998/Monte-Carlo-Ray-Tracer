@@ -25,14 +25,18 @@ class RenderingEngine {
             const auto& hitRecord = hitResult.value();
             const auto  scattered = hitRecord.GetMaterial().Scattered(ray, hitRecord);
             const auto  emitted   = hitRecord.GetMaterial().Emitted(hitRecord.GetUv(), hitRecord.GetLocation());
-            if (scattered) {
+            if (scattered && scattered.value().GetMaybeSpecularRay()) {
+                // specular ray
+                const auto& scatterRecord = scattered.value();
+                return scatterRecord.GetAttenuation() *
+                       GetRayColor(bvh, scatterRecord.GetMaybeSpecularRay().value(), maxDepth - 1, skyColor);
+            } else if (scattered) {
                 auto       lightShape        = Rectangle::OfZX(227, 332, 227, 332, 554, false, nullptr);
                 const auto lightShapePointer = std::shared_ptr<Mesh>(&lightShape, [](Rectangle* _) {});
                 auto       p1                = HitablePDF { lightShapePointer, hitRecord.GetLocation() };
-                auto       p2                = CosinePDF { hitRecord.GetNorm() };
+                auto       p2                = scattered.value().GetPDF();
                 const auto p1p               = std::shared_ptr<PDF>(&p1, [](auto _) {});
-                const auto p2p               = std::shared_ptr<PDF>(&p2, [](auto _) {});
-                const auto pMix              = MixturePDF { p1p, p2p };
+                const auto pMix              = MixturePDF { p1p, p2 };
                 const auto direction         = pMix.GenerateRayDirection();
                 const auto pdfValue          = pMix.GetPDFValue(direction);
                 const auto scatteredRay      = Ray { hitRecord.GetLocation(), direction, ray.GetTimeEmitted() };

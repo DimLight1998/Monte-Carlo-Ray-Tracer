@@ -9,8 +9,8 @@
 #include <tuple>
 
 #include "../common/Ray.hpp"
+#include "../common/ScatterRecord.hpp"
 #include "../common/Typing.hpp"
-#include "../common/ScatteredRay.hpp"
 #include "../hitables/HitRecord.hpp"
 
 class HitRecord;
@@ -25,7 +25,7 @@ class Material {
      *      Otherwise, the first component is the attenuation to be applied on the scattered ray,
      *      and the second component is the scattered ray.
      */
-    [[nodiscard]] virtual std::optional<ScatteredRay>
+    [[nodiscard]] virtual std::optional<ScatterRecord>
     Scattered(const Ray& ray, const HitRecord& hitRecord) const = 0;
 
     /**
