@@ -18,18 +18,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/common/ScatterRecord.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/common/ScatterRecord.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ScatteredRay.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ScatteredRay.hpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/materials/Glass.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Glass.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/materials/Lambertian.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Lambertian.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/materials/LightSource.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/LightSource.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/materials/Material.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Material.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/materials/Metal.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Metal.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/materials/Smoke.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Smoke.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -128,7 +118,8 @@
       <workItem from="1574296537371" duration="1884000" />
       <workItem from="1574320535058" duration="310000" />
       <workItem from="1574331432983" duration="10749000" />
-      <workItem from="1574342637361" duration="1841000" />
+      <workItem from="1574342637361" duration="2733000" />
+      <workItem from="1574388788754" duration="543000" />
     </task>
     <servers />
   </component>
