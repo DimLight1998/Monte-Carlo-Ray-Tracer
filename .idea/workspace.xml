@@ -19,7 +19,12 @@
   <component name="ChangeListManager">
     <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/materials/Glass.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/materials/Glass.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Utils.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hitables/Mesh.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Mesh.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pdf/HitablePdf.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/pdf/HitablePdf.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rendering/SceneLoader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/SceneLoader.hpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,6 +40,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/pdf/MultipleHitablesPDF.hpp" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/materials/LightSource.hpp" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/materials/Lambertian.hpp" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/bounded-volumn-hierarchy/BvhLeaf.hpp" root0="SKIP_INSPECTION" />
@@ -119,7 +125,8 @@
       <workItem from="1574320535058" duration="310000" />
       <workItem from="1574331432983" duration="10749000" />
       <workItem from="1574342637361" duration="2733000" />
-      <workItem from="1574388788754" duration="543000" />
+      <workItem from="1574388788754" duration="4022000" />
+      <workItem from="1574392837624" duration="3218000" />
     </task>
     <servers />
   </component>

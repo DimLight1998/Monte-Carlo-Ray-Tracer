@@ -13,15 +13,16 @@
 using namespace std;
 
 int main() {
-    const auto hitables        = SceneLoader::LoadScene("../../data/testScene.json");
-    const auto configAndCamera = ConfigLoader::LoadConfig("../../data/testScene.json");
-    const auto camera          = configAndCamera.second;
-    const auto width           = configAndCamera.first.GetImageWidth();
-    const auto height          = configAndCamera.first.GetImageHeight();
-    const auto maxDepth        = configAndCamera.first.GetRayMaxDepth();
-    const auto numSamples      = configAndCamera.first.GetSamplesPerPixel();
-    const auto skyColor        = configAndCamera.first.GetSkyColor();
-    const auto bvh             = BVH::BuildBVH(hitables);
+    const auto  allAndImportantHitables = SceneLoader::LoadScene("../../data/testScene.json");
+    const auto  configAndCamera         = ConfigLoader::LoadConfig("../../data/testScene.json");
+    const auto  camera                  = configAndCamera.second;
+    const auto  width                   = configAndCamera.first.GetImageWidth();
+    const auto  height                  = configAndCamera.first.GetImageHeight();
+    const auto  maxDepth                = configAndCamera.first.GetRayMaxDepth();
+    const auto  numSamples              = configAndCamera.first.GetSamplesPerPixel();
+    const auto  skyColor                = configAndCamera.first.GetSkyColor();
+    const auto  bvh                     = BVH::BuildBVH(allAndImportantHitables.first);
+    const auto& importantHitables       = allAndImportantHitables.second;
 
     auto data = std::vector<unsigned char>();
     data.reserve(height * width * 3);
@@ -30,17 +31,24 @@ int main() {
 
     for (auto n = 0; n < numSamples; n++) {
         for (auto i = 0; i < width; i++) {
-#pragma omp parallel for default(none) shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data, skyColor)
+#pragma omp parallel for default(none) \
+    shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data, skyColor, importantHitables)
             for (auto j = 0; j < height; j++) {
                 const auto x     = RandomFloatBetween((i - 0.5f) / width, (i + 0.5f) / width);
                 const auto y     = RandomFloatBetween((j - 0.5f) / height, (j + 0.5f) / height);
                 Ray        ray   = camera.GetEmittedRay(x, y);
-                const auto color = RenderingEngine::GetRayColor(bvh, ray, maxDepth, skyColor);
+                const auto color = RenderingEngine::GetRayColor(bvh, ray, maxDepth, skyColor, importantHitables);
                 const auto index = ((height - 1 - j) * width + i) * 3;
 
-                dataSum[index + 0] += std::clamp(color.b, 0.0f, 1.0f);
-                dataSum[index + 1] += std::clamp(color.g, 0.0f, 1.0f);
-                dataSum[index + 2] += std::clamp(color.r, 0.0f, 1.0f);
+
+                // todo this is a dirty fix, need to figure out why:
+                //   when use hitable density, clamping makes some pixels too light
+//                dataSum[index + 0] += clamp(color.b, 0.0f, 8.0f);
+//                dataSum[index + 1] += clamp(color.g, 0.0f, 8.0f);
+//                dataSum[index + 2] += clamp(color.r, 0.0f, 8.0f);
+                dataSum[index + 0] += color.b;
+                dataSum[index + 1] += color.g;
+                dataSum[index + 2] += color.r;
                 data[index + 0] = std::clamp(glm::sqrt(dataSum[index + 0] / (n + 1)) * 256, 0.0l, 255.99l);
                 data[index + 1] = std::clamp(glm::sqrt(dataSum[index + 1] / (n + 1)) * 256, 0.0l, 255.99l);
                 data[index + 2] = std::clamp(glm::sqrt(dataSum[index + 2] / (n + 1)) * 256, 0.0l, 255.99l);

@@ -144,12 +144,11 @@ class Mesh: public Hitable {
     }
 
     float GetRayPDF(const Location& origin, const Direction& direction) const override {
-        const auto weight = 1.0f / _triangles.size();
-        auto       sum    = 0.0f;
+        auto sum = 0.0f;
         for (const auto& triangle : _triangles) {
-            sum += weight * triangle.GetRayPDF(origin, direction);
+            sum += triangle.GetRayPDF(origin, direction);
         }
-        return sum;
+        return sum / _triangles.size();
     }
 
     protected:

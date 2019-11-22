@@ -15,10 +15,16 @@
 #include "../pdf/CosinePdf.hpp"
 #include "../pdf/HitablePdf.hpp"
 #include "../pdf/MixturePDF.hpp"
+#include "../pdf/MultipleHitablesPDF.hpp"
 
 class RenderingEngine {
     public:
-    static Color GetRayColor(const std::unique_ptr<BVH>& bvh, const Ray& ray, int maxDepth, const Color& skyColor) {
+    static Color GetRayColor(
+        const std::unique_ptr<BVH>&                        bvh,
+        const Ray&                                         ray,
+        int                                                maxDepth,
+        const Color&                                       skyColor,
+        const std::vector<std::shared_ptr<const Hitable>>& importantHitables) {
         if (maxDepth == 0) return Black;
         const auto hitResult = bvh->HitBy(ray, RayHitMin, RayHitMax);
         if (hitResult) {
@@ -29,21 +35,31 @@ class RenderingEngine {
                 // specular ray
                 const auto& scatterRecord = scattered.value();
                 return scatterRecord.GetAttenuation() *
-                       GetRayColor(bvh, scatterRecord.GetMaybeSpecularRay().value(), maxDepth - 1, skyColor);
+                       GetRayColor(
+                           bvh, scatterRecord.GetMaybeSpecularRay().value(), maxDepth - 1, skyColor, importantHitables);
+            } else if (scattered && !importantHitables.empty()) {
+                auto       p1           = MultipleHitablesPDF { importantHitables, hitRecord.GetLocation() };
+                auto       p2           = scattered.value().GetPDF();
+                const auto p1p          = std::shared_ptr<PDF>(&p1, [](auto _) {});
+                const auto pMix         = MixturePDF { p1p, p2 };
+                const auto direction    = p2->GenerateRayDirection();
+                const auto pdfValue     = p2->GetPDFValue(direction);
+                const auto scatteredRay = Ray { hitRecord.GetLocation(), direction, ray.GetTimeEmitted() };
+                const auto attenuation  = scattered.value().GetAttenuation();
+                auto       ret =
+                    emitted + attenuation * hitRecord.GetMaterial().GetScatteringPDF(ray, hitRecord, scatteredRay) *
+                                  GetRayColor(bvh, scatteredRay, maxDepth - 1, skyColor, importantHitables) / pdfValue;
+                NormalizeFloat(ret);
+                return ret;
             } else if (scattered) {
-                auto       lightShape        = Rectangle::OfZX(227, 332, 227, 332, 554, false, nullptr);
-                const auto lightShapePointer = std::shared_ptr<Mesh>(&lightShape, [](Rectangle* _) {});
-                auto       p1                = HitablePDF { lightShapePointer, hitRecord.GetLocation() };
-                auto       p2                = scattered.value().GetPDF();
-                const auto p1p               = std::shared_ptr<PDF>(&p1, [](auto _) {});
-                const auto pMix              = MixturePDF { p1p, p2 };
-                const auto direction         = pMix.GenerateRayDirection();
-                const auto pdfValue          = pMix.GetPDFValue(direction);
-                const auto scatteredRay      = Ray { hitRecord.GetLocation(), direction, ray.GetTimeEmitted() };
-                const auto attenuation       = scattered.value().GetAttenuation();
-                auto       ret               = emitted + attenuation *
-                                         hitRecord.GetMaterial().GetScatteringPDF(ray, hitRecord, scatteredRay) *
-                                         GetRayColor(bvh, scatteredRay, maxDepth - 1, skyColor) / pdfValue;
+                auto       scatterPDF   = scattered.value().GetPDF();
+                const auto direction    = scatterPDF->GenerateRayDirection();
+                const auto pdfValue     = scatterPDF->GetPDFValue(direction);
+                const auto scatteredRay = Ray { hitRecord.GetLocation(), direction, ray.GetTimeEmitted() };
+                const auto attenuation  = scattered.value().GetAttenuation();
+                auto       ret =
+                    emitted + attenuation * hitRecord.GetMaterial().GetScatteringPDF(ray, hitRecord, scatteredRay) *
+                                  GetRayColor(bvh, scatteredRay, maxDepth - 1, skyColor, importantHitables) / pdfValue;
                 NormalizeFloat(ret);
                 return ret;
             } else {

@@ -13,8 +13,8 @@ class HitablePDF: public PDF {
     public:
     HitablePDF(std::shared_ptr<const Hitable> hitable, const Location& origin);
 
-    virtual float     GetPDFValue(const Direction& direction) const override;
-    virtual Direction GenerateRayDirection() const override;
+    [[nodiscard]] float     GetPDFValue(const Direction& direction) const override;
+    [[nodiscard]] Direction GenerateRayDirection() const override;
 
     private:
     std::shared_ptr<const Hitable> _hitable;
@@ -24,11 +24,11 @@ class HitablePDF: public PDF {
 HitablePDF::HitablePDF(std::shared_ptr<const Hitable> hitable, const Location& origin)
     : _hitable(std::move(hitable)), _origin(origin) {}
 
-float HitablePDF::GetPDFValue(const Direction& direction) const {
+[[nodiscard]] float HitablePDF::GetPDFValue(const Direction& direction) const {
     return _hitable->GetRayPDF(_origin, direction);
 }
 
-Direction HitablePDF::GenerateRayDirection() const {
+[[nodiscard]] Direction HitablePDF::GenerateRayDirection() const {
     return _hitable->GetRandomRayDirection(_origin);
 }
 
