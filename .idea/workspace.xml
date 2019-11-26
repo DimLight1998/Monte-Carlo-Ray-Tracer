@@ -8,6 +8,7 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
       <config projectName="MonteCarloRayTracer" targetName="Monte_Carlo_Ray_Tracer" />
+      <config projectName="MonteCarloRayTracer" targetName="MonteCarloRayTracer" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -19,8 +20,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bounded-volumn-hierarchy/BvhLeaf.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/bounded-volumn-hierarchy/BvhLeaf.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bounded-volumn-hierarchy/BvhNode.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/bounded-volumn-hierarchy/BvhNode.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hitables/AlignedBox.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/AlignedBox.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hitables/Hitable.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Hitable.hpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,6 +31,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FavoritesManager">
     <favorites_list name="Monte_Carlo_Ray_Tracer" />
   </component>
@@ -68,9 +72,9 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/common" />
       <recent name="$PROJECT_DIR$/lib/bezier" />
       <recent name="$PROJECT_DIR$/src/pdf" />
-      <recent name="$PROJECT_DIR$/src/common" />
       <recent name="$PROJECT_DIR$/bin" />
       <recent name="$PROJECT_DIR$/src/Rendering" />
     </key>
@@ -123,7 +127,7 @@
       <workItem from="1574388788754" duration="4022000" />
       <workItem from="1574392837624" duration="4590000" />
       <workItem from="1574741125368" duration="626000" />
-      <workItem from="1574745099807" duration="102000" />
+      <workItem from="1574745099807" duration="659000" />
     </task>
     <servers />
   </component>

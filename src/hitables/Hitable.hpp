@@ -5,7 +5,7 @@
 #ifndef MONTE_CARLO_RAY_TRACER_HITABLE_HPP
 #define MONTE_CARLO_RAY_TRACER_HITABLE_HPP
 
-#include "AlignedBox.hpp"
+#include "../common/AlignedBox.hpp"
 #include "HitRecord.hpp"
 
 #include "../bounded-volumn-hierarchy/Bvh.hpp"

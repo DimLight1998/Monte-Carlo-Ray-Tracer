@@ -9,8 +9,8 @@
 #include <iostream>
 #include <sstream>
 
-#include "../common/Ray.hpp"
-#include "../common/Utils.hpp"
+#include "Ray.hpp"
+#include "Utils.hpp"
 
 class AlignedBox {
     public:

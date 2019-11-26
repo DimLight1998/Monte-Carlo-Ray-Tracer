@@ -8,7 +8,7 @@
 #include <iostream>
 #include <memory>
 
-#include "../hitables/AlignedBox.hpp"
+#include "../common/AlignedBox.hpp"
 #include "Bvh.hpp"
 
 class BVHNode: public BVH {

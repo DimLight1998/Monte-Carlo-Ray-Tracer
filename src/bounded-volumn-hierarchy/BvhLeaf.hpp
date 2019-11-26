@@ -5,7 +5,7 @@
 #ifndef MONTE_CARLO_RAY_TRACER_BVHLEAF_HPP
 #define MONTE_CARLO_RAY_TRACER_BVHLEAF_HPP
 
-#include "../hitables/AlignedBox.hpp"
+#include "../common/AlignedBox.hpp"
 #include "../hitables/Hitable.hpp"
 #include "Bvh.hpp"
 
