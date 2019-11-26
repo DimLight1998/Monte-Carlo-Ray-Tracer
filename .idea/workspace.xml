@@ -7,7 +7,7 @@
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="Monte_Carlo_Ray_Tracer" targetName="Monte_Carlo_Ray_Tracer" />
+      <config projectName="MonteCarloRayTracer" targetName="Monte_Carlo_Ray_Tracer" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -19,12 +19,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Utils.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hitables/Mesh.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hitables/Mesh.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pdf/HitablePdf.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/pdf/HitablePdf.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/RenderingEngine.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rendering/SceneLoader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/SceneLoader.hpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +28,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
   <component name="FavoritesManager">
     <favorites_list name="Monte_Carlo_Ray_Tracer" />
   </component>
@@ -72,15 +67,15 @@
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/bezier" />
       <recent name="$PROJECT_DIR$/src/pdf" />
       <recent name="$PROJECT_DIR$/src/common" />
       <recent name="$PROJECT_DIR$/bin" />
       <recent name="$PROJECT_DIR$/src/Rendering" />
-      <recent name="$PROJECT_DIR$/src/Hitables" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -96,7 +91,7 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="Monte_Carlo_Ray_Tracer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Monte_Carlo_Ray_Tracer" TARGET_NAME="Monte_Carlo_Ray_Tracer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Monte_Carlo_Ray_Tracer" RUN_TARGET_NAME="Monte_Carlo_Ray_Tracer">
+    <configuration name="MonteCarloRayTracer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="MonteCarloRayTracer" TARGET_NAME="MonteCarloRayTracer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="MonteCarloRayTracer" RUN_TARGET_NAME="MonteCarloRayTracer">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -126,7 +121,9 @@
       <workItem from="1574331432983" duration="10749000" />
       <workItem from="1574342637361" duration="2733000" />
       <workItem from="1574388788754" duration="4022000" />
-      <workItem from="1574392837624" duration="3218000" />
+      <workItem from="1574392837624" duration="4590000" />
+      <workItem from="1574741125368" duration="626000" />
+      <workItem from="1574745099807" duration="102000" />
     </task>
     <servers />
   </component>

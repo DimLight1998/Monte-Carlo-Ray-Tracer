@@ -42,8 +42,8 @@ class RenderingEngine {
                 auto       p2           = scattered.value().GetPDF();
                 const auto p1p          = std::shared_ptr<PDF>(&p1, [](auto _) {});
                 const auto pMix         = MixturePDF { p1p, p2 };
-                const auto direction    = p2->GenerateRayDirection();
-                const auto pdfValue     = p2->GetPDFValue(direction);
+                const auto direction    = pMix.GenerateRayDirection();
+                const auto pdfValue     = pMix.GetPDFValue(direction);
                 const auto scatteredRay = Ray { hitRecord.GetLocation(), direction, ray.GetTimeEmitted() };
                 const auto attenuation  = scattered.value().GetAttenuation();
                 auto       ret =

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(Monte_Carlo_Ray_Tracer)
+project(MonteCarloRayTracer)
 
 set(CMAKE_CXX_STANDARD 17)
 set(EXECUTABLE_OUTPUT_PATH "bin")
@@ -19,8 +19,8 @@ endif()
 
 include_directories(lib)
 
-file(GLOB_RECURSE Monte_Carlo_Ray_Tracer_SRC "src/*.cpp" "src/*.hpp")
+file(GLOB_RECURSE MonteCarloRayTracerSRC "src/*.cpp" "src/*.hpp")
 
-add_executable(Monte_Carlo_Ray_Tracer ${Monte_Carlo_Ray_Tracer_SRC})
-target_link_libraries(Monte_Carlo_Ray_Tracer ${OpenCV_LIBS})
+add_executable(MonteCarloRayTracer ${MonteCarloRayTracerSRC})
+target_link_libraries(MonteCarloRayTracer ${OpenCV_LIBS})
 
