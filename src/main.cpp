@@ -40,12 +40,6 @@ int main() {
                 const auto color = RenderingEngine::GetRayColor(bvh, ray, maxDepth, skyColor, importantHitables);
                 const auto index = ((height - 1 - j) * width + i) * 3;
 
-
-                // todo this is a dirty fix, need to figure out why:
-                //   when use hitable density, clamping makes some pixels too light
-//                dataSum[index + 0] += clamp(color.b, 0.0f, 8.0f);
-//                dataSum[index + 1] += clamp(color.g, 0.0f, 8.0f);
-//                dataSum[index + 2] += clamp(color.r, 0.0f, 8.0f);
                 dataSum[index + 0] += color.b;
                 dataSum[index + 1] += color.g;
                 dataSum[index + 2] += color.r;

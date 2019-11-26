@@ -13,6 +13,7 @@
 
 #include "../hitables/Hitable.hpp"
 #include "../hitables/Mesh.hpp"
+#include "../hitables/MovingSphere.hpp"
 #include "../hitables/SmokeWrapper.hpp"
 #include "../hitables/Sphere.hpp"
 #include "../hitables/prefabs/Cube.hpp"
@@ -119,6 +120,20 @@ class SceneLoader {
             const auto& center = hitableJson["center"];
             const float radius = hitableJson["radius"];
             return { std::make_shared<Sphere>(Location(center[0], center[1], center[2]), radius, material), important };
+        } else if (type == "movingSphere") {
+            const auto& centerStart = hitableJson["centerStart"];
+            const auto& centerEnd   = hitableJson["centerEnd"];
+            const float radius      = hitableJson["radius"];
+            const float movingStart = hitableJson["movingStart"];
+            const float movingEnd   = hitableJson["movingEnd"];
+            return { std::make_shared<MovingSphere>(
+                         Location { centerStart[0], centerStart[1], centerStart[2] },
+                         Location { centerEnd[0], centerEnd[1], centerEnd[2] },
+                         radius,
+                         movingStart,
+                         movingEnd,
+                         material),
+                     false };
         } else if (type == "mesh") {
             const std::string objPath = hitableJson["objPath"];
             const auto        object  = std::make_shared<Mesh>(objPath, material);
