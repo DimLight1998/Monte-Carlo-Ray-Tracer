@@ -20,8 +20,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4ce3b7bc-c057-4b9f-9d2b-42b099961ada" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rendering/SceneLoader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/rendering/SceneLoader.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/PerlinNoise.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/textures/PerlinNoise.hpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -126,7 +126,7 @@
       <workItem from="1574392837624" duration="4590000" />
       <workItem from="1574741125368" duration="626000" />
       <workItem from="1574745099807" duration="968000" />
-      <workItem from="1574748719566" duration="2776000" />
+      <workItem from="1574748719566" duration="7818000" />
     </task>
     <servers />
   </component>

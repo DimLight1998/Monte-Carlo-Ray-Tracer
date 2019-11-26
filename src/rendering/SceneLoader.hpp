@@ -25,6 +25,7 @@
 #include "../materials/Smoke.hpp"
 #include "../textures/ConstantColor.hpp"
 #include "../textures/DiffuseMapping.hpp"
+#include "../textures/PerlinNoise.hpp"
 
 using json = nlohmann::json;
 
@@ -73,6 +74,9 @@ class SceneLoader {
         } else if (type == "diffuseMapping") {
             const std::string imagePath = textureJson["imagePath"];
             return { name, std::make_shared<DiffuseMapping>(imagePath) };
+        } else if (type == "perlinNoise") {
+            const float scale = textureJson["scale"];
+            return { name, std::make_shared<PerlinNoise>(scale) };
         }
         throw std::runtime_error("unknown texture type");
     }
