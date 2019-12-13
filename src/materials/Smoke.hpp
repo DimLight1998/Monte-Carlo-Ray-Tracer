@@ -9,6 +9,7 @@
 #include "../textures/Texture.hpp"
 #include "Material.hpp"
 
+
 class Smoke: public Material {
     public:
     explicit Smoke(const std::shared_ptr<Texture>& texture, float density)
@@ -17,8 +18,7 @@ class Smoke: public Material {
     [[nodiscard]] std::optional<ScatterRecord> Scattered(const Ray& ray, const HitRecord& hitRecord) const override {
         const auto attenuation      = _texture->GetTextureColorAt(hitRecord.GetUv(), hitRecord.GetLocation());
         const auto scatterDirection = RandomPointInUnitSphere();
-        return {};
-        //        return { { attenuation, Ray(hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted()), 0.0f } }; // todo
+        return { { attenuation, nullptr, { { hitRecord.GetLocation(), scatterDirection, ray.GetTimeEmitted() } } } };
     }
 
     [[nodiscard]] float GetDensity() const {

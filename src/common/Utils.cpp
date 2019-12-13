@@ -5,19 +5,15 @@
 #include "Utils.hpp"
 
 float RandomFloatBetween(float a, float b) {
-    // todo
-//    static std::mt19937 generator(
-//        static_cast<unsigned long>(std::chrono::system_clock::now().time_since_epoch().count()));
-    static std::mt19937 generator(0);
+    static std::mt19937 generator(
+        static_cast<unsigned long>(std::chrono::system_clock::now().time_since_epoch().count()));
     std::uniform_real_distribution<float> distribution(a, b);
     return distribution(generator);
 }
 
 float RandomIntegerBetween(int a, int b) {
-    // todo
-//    static std::mt19937 generator(
-//        static_cast<unsigned long>(std::chrono::system_clock::now().time_since_epoch().count()));
-    static std::mt19937 generator(0);
+    static std::mt19937 generator(
+        static_cast<unsigned long>(std::chrono::system_clock::now().time_since_epoch().count()));
     std::uniform_int_distribution<int> distribution(a, b);
     return distribution(generator);
 }
