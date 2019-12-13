@@ -43,13 +43,24 @@ class RenderingEngine {
             const auto& specularRay   = scatterRecord.GetMaybeSpecularRay().value();
             return attenuation * GetRayColor(bvh, specularRay, maxDepth - 1, skyColor, mcImportantHitables, photonMap);
         } else if (scattered) {
-            const auto               location    = hitRecord.GetLocation();
-            std::shared_ptr<PDF>     pdfScatter  = scattered.value().GetPDF();
-            std::shared_ptr<PDF>     pdfHitables = std::make_shared<MultipleHitablesPDF>(mcImportantHitables, location);
-            std::shared_ptr<PDF>     pdfPhotonMapping = std::make_shared<PhotonMappingPDF>(photonMap, hitRecord);
-            std::shared_ptr<Mix3PDF> pdfFinal = std::make_shared<Mix3PDF>(pdfHitables, pdfPhotonMapping, pdfScatter);
+            const auto           location   = hitRecord.GetLocation();
+            std::shared_ptr<PDF> pdfScatter = scattered.value().GetPDF();
+            std::shared_ptr<PDF> pdfFinal   = nullptr;
+            if (!mcImportantHitables.empty() && !photonMap.IsEmpty()) {
+                std::shared_ptr<PDF> pdfHitables = std::make_shared<MultipleHitablesPDF>(mcImportantHitables, location);
+                std::shared_ptr<PDF> pdfPhotonMapping = std::make_shared<PhotonMappingPDF>(photonMap, hitRecord);
+                pdfFinal = std::make_shared<Mix3PDF>(pdfHitables, pdfPhotonMapping, pdfScatter);
+            } else if (!mcImportantHitables.empty()) {
+                std::shared_ptr<PDF> pdfHitables = std::make_shared<MultipleHitablesPDF>(mcImportantHitables, location);
+                pdfFinal                         = std::make_shared<Mix2PDF>(pdfHitables, pdfScatter);
+            } else if (!photonMap.IsEmpty()) {
+                std::shared_ptr<PDF> pdfPhotonMapping = std::make_shared<PhotonMappingPDF>(photonMap, hitRecord);
+                pdfFinal                              = std::make_shared<Mix2PDF>(pdfPhotonMapping, pdfScatter);
+            } else {
+                pdfFinal = pdfScatter;
+            }
 
-            const auto direction    = (pdfFinal->GenerateRayDirection()).value();  // guaranteed to have a value
+            const auto direction    = pdfFinal->GenerateRayDirection();
             const auto pdfValue     = pdfFinal->GetPDFValue(direction);
             const auto scatteredRay = Ray { hitRecord.GetLocation(), direction, ray.GetTimeEmitted() };
             const auto attenuation  = scattered.value().GetAttenuation();

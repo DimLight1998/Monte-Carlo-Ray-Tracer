@@ -17,7 +17,7 @@ class Mix2PDF: public PDF {
 
     [[nodiscard]] float GetPDFValue(const Direction& direction) const override;
 
-    [[nodiscard]] std::optional<Direction> GenerateRayDirection() const override;
+    [[nodiscard]] Direction GenerateRayDirection() const override;
 
     private:
     std::shared_ptr<PDF> _pdf1;
@@ -28,7 +28,7 @@ float Mix2PDF::GetPDFValue(const Direction& direction) const {
     return 0.5f * _pdf1->GetPDFValue(direction) + 0.5f * _pdf2->GetPDFValue(direction);
 }
 
-std::optional<Direction> Mix2PDF::GenerateRayDirection() const {
+Direction Mix2PDF::GenerateRayDirection() const {
     const auto decide = RandomFloatBetween(0, 1);
     if (decide > 0.5f) {
         return _pdf1->GenerateRayDirection();

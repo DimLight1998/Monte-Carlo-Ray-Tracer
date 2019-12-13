@@ -14,7 +14,7 @@ class HitablePDF: public PDF {
     HitablePDF(std::shared_ptr<const Hitable> hitable, const Location& origin);
 
     [[nodiscard]] float                    GetPDFValue(const Direction& direction) const override;
-    [[nodiscard]] std::optional<Direction> GenerateRayDirection() const override;
+    [[nodiscard]] Direction GenerateRayDirection() const override;
 
     private:
     std::shared_ptr<const Hitable> _hitable;
@@ -28,8 +28,8 @@ HitablePDF::HitablePDF(std::shared_ptr<const Hitable> hitable, const Location& o
     return _hitable->GetRayPDF(_origin, direction);
 }
 
-[[nodiscard]] std::optional<Direction> HitablePDF::GenerateRayDirection() const {
-    return { _hitable->GetRandomRayDirection(_origin) };
+[[nodiscard]] Direction HitablePDF::GenerateRayDirection() const {
+    return _hitable->GetRandomRayDirection(_origin) ;
 }
 
 #endif  //MONTE_CARLO_RAY_TRACER_HITABLEPDF_HPP

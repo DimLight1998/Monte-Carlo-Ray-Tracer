@@ -109,7 +109,7 @@ void AppendPhotonMappingData(
         AppendPhotonMappingData(bvh, specularRay, maxDepth - 1, dataBuffer);
     } else if (scattered) {
         const auto scatterPDF   = scattered.value().GetPDF();
-        const auto direction    = scatterPDF->GenerateRayDirection().value();
+        const auto direction    = scatterPDF->GenerateRayDirection();
         const auto scatteredRay = Ray { hitRecord.GetLocation(), direction, ray.GetTimeEmitted() };
         AppendPhotonMappingData(bvh, scatteredRay, maxDepth - 1, dataBuffer);
     }

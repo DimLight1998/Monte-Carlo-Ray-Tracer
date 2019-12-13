@@ -39,7 +39,7 @@ int main() {
 #pragma omp parallel for default(none) shared(bvh, totalDataBuffer, pmImportantHitables)
         for (auto i = 0; i < 16; i++) {
             DataBuffer subDataBuffer;
-            for (auto j = 0; j < 200000; j++) {
+            for (auto j = 0; j < 2000000; j++) {
                 const auto ray = GetRandomRayFromPMHitables(pmImportantHitables);
                 AppendPhotonMappingData(bvh, ray, 3, subDataBuffer);
             }

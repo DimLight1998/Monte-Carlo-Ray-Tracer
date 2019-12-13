@@ -54,8 +54,8 @@ class OrthoNormalBases {
 class CosinePDF: public PDF {
     public:
     explicit CosinePDF(const Direction& w);
-    [[nodiscard]] float                    GetPDFValue(const Direction& direction) const override;
-    [[nodiscard]] std::optional<Direction> GenerateRayDirection() const override;
+    [[nodiscard]] float     GetPDFValue(const Direction& direction) const override;
+    [[nodiscard]] Direction GenerateRayDirection() const override;
 
     private:
     OrthoNormalBases _bases;
@@ -69,8 +69,8 @@ float CosinePDF::GetPDFValue(const Direction& direction) const {
     return cosine > 0.0f ? (cosine / Pi) : 0.0f;
 }
 
-std::optional<Direction> CosinePDF::GenerateRayDirection() const {
-    return { _bases.GetLocalLocation(RandomCosineDirection()) };
+Direction CosinePDF::GenerateRayDirection() const {
+    return _bases.GetLocalLocation(RandomCosineDirection());
 }
 
 #endif  //MONTE_CARLO_RAY_TRACER_COSINEPDF_HPP

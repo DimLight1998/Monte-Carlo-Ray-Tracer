@@ -15,9 +15,10 @@ class PhotonMappingPDF: public PDF {
         : _photonMap { photonMap }, _hitRecord { hitRecord } {
         const auto location    = hitRecord.GetLocation();
         const auto queryResult = photonMap.Query(location, QueryNum);
+        const auto normal      = hitRecord.GetNorm();
+
         if (queryResult.empty() || queryResult[0].second > MaxDSAllowed) {
-            _shouldReject = true;
-            return;
+            _direction = normal;
         } else {
             glm::vec3 sum   = { 0.0f, 0.0f, 0.0f };
             auto      count = 0;
@@ -26,49 +27,37 @@ class PhotonMappingPDF: public PDF {
                 sum += entry.first;
                 count++;
             }
-            _direction              = glm::normalize(sum / (static_cast<float>(count)));
-            const auto normal       = hitRecord.GetNorm();
-            const auto cosAlphaComp = glm::dot(_direction, normal);
-            if (cosAlphaComp <= 0) {
-                _shouldReject = true;
-                return;
-            }
-            const auto alphaComp = std::acos(cosAlphaComp);
-            const auto alpha     = Pi / 2 - alphaComp;
-            _alpha               = std::min(alpha, _alpha);
-            _pdfValue            = 1 / (Pi * _alpha * _alpha);
+            _direction = glm::normalize(sum / (static_cast<float>(count)));
         }
     }
 
     virtual float GetPDFValue(const Direction& direction) const override {
         const auto normalizedDirection = glm::normalize(direction);
-        const auto threshold           = std::cos(_alpha);
-        if (glm::dot(normalizedDirection, _direction) < threshold) {
+        if (glm::dot(normalizedDirection, _direction) < Threshold) {
             return 0;
         } else {
-            return _pdfValue;
+            return PDFValue;
         }
     }
 
-    virtual std::optional<Direction> GenerateRayDirection() const override {
-        if (_photonMap.IsEmpty() || _shouldReject) return {};
+    virtual Direction GenerateRayDirection() const override {
         const auto bases         = OrthoNormalBases::BuildFromW(_direction);
         const auto point         = RandomPointOnUnitDisk();
-        const auto x             = point.x * _alpha;
-        const auto y             = point.y * _alpha;
+        const auto x             = point.x * Alpha;
+        const auto y             = point.y * Alpha;
         const auto directionSend = bases.GetLocalLocation(x, y, 1);
-        return { directionSend };
+        return directionSend;
     }
 
     private:
     const PhotonMap&       _photonMap;
     const HitRecord&       _hitRecord;
     Direction              _direction;
-    float                  _alpha        = Pi / 12;
-    float                  _pdfValue     = 0;
-    bool                   _shouldReject = false;
-    static constexpr int   QueryNum      = 4;
-    static constexpr float MaxDSAllowed  = 1;
+    static constexpr float Alpha        = Pi / 12;
+    static constexpr float PDFValue     = Pi * Alpha * Alpha;
+    static constexpr float Threshold    = 0.965926;
+    static constexpr int   QueryNum     = 6;
+    static constexpr float MaxDSAllowed = 16;
 };
 
 #endif  //MONTECARLORAYTRACER_PHOTONMAPPINGPDF_HPP
