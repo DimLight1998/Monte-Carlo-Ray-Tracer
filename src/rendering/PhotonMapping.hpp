@@ -13,6 +13,7 @@
 
 #include "../bounded-volumn-hierarchy/Bvh.hpp"
 #include "../common/Typing.hpp"
+#include "../pdf/PhotonMappingPDF.hpp"
 
 struct PhotonCloud {
     struct PhotonPoint {
@@ -55,8 +56,8 @@ class PhotonMap {
     }
 
     // direction and distance squared
-    std::vector<std::pair<Direction, float>> Query(float x, float y, float z, int numNearestNeighbors) {
-        float                                    query[] = { x, y, z };
+    std::vector<std::pair<Direction, float>> Query(const Location& location, int numNearestNeighbors) const {
+        float                                    query[] = { location.x, location.y, location.z };
         std::vector<std::pair<Direction, float>> ret;
         size_t                                   indices[numNearestNeighbors];
         float                                    distancesSquared[numNearestNeighbors];
@@ -72,6 +73,14 @@ class PhotonMap {
 
     [[nodiscard]] int GetCount() const {
         return _photonCloud.PhotonPoints.size();
+    }
+
+    [[nodiscard]] bool IsEmpty() const {
+        return _photonCloud.PhotonPoints.empty();
+    }
+
+    [[nodiscard]] std::shared_ptr<PhotonMappingPDF> GetPDF(const HitRecord& hitRecord) const {
+        return std::make_shared<PhotonMappingPDF>(*this, hitRecord);
     }
 
     private:

@@ -57,12 +57,13 @@ int main() {
     for (auto n = 0; n < numSamples; n++) {
         for (auto i = 0; i < width; i++) {
 #pragma omp parallel for default(none) \
-    shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data, skyColor, mcImportantHitables)
+    shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data, skyColor, mcImportantHitables, photonMap)
             for (auto j = 0; j < height; j++) {
-                const auto x     = RandomFloatBetween((i - 0.5f) / width, (i + 0.5f) / width);
-                const auto y     = RandomFloatBetween((j - 0.5f) / height, (j + 0.5f) / height);
-                Ray        ray   = camera.GetEmittedRay(x, y);
-                const auto color = RenderingEngine::GetRayColor(bvh, ray, maxDepth, skyColor, mcImportantHitables);
+                const auto x   = RandomFloatBetween((i - 0.5f) / width, (i + 0.5f) / width);
+                const auto y   = RandomFloatBetween((j - 0.5f) / height, (j + 0.5f) / height);
+                Ray        ray = camera.GetEmittedRay(x, y);
+                const auto color =
+                    RenderingEngine::GetRayColor(bvh, ray, maxDepth, skyColor, mcImportantHitables, photonMap);
                 const auto index = ((height - 1 - j) * width + i) * 3;
 
                 dataSum[index + 0] += color.b;
