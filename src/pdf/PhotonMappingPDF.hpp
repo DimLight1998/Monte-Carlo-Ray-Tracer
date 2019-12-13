@@ -5,29 +5,31 @@
 #ifndef MONTECARLORAYTRACER_PHOTONMAPPINGPDF_HPP
 #define MONTECARLORAYTRACER_PHOTONMAPPINGPDF_HPP
 
-#include "../rendering/PhotonMapping.hpp"
 #include "Pdf.hpp"
+
+#include "../rendering/PhotonMapping.hpp"
 
 class PhotonMappingPDF: public PDF {
     public:
-    explicit PhotonMappingPDF(const PhotonMap& photonMap, const HitRecord& hitRecord)
+    PhotonMappingPDF(const PhotonMap& photonMap, const HitRecord& hitRecord)
         : _photonMap { photonMap }, _hitRecord { hitRecord } {
-        const auto location = hitRecord.GetLocation();
+        const auto location    = hitRecord.GetLocation();
         const auto queryResult = photonMap.Query(location, QueryNum);
-        // todo
     }
 
     virtual float GetPDFValue(const Direction& direction) const override {
-        return 0;
+        return 0;  // todo
     }
 
-    virtual Direction GenerateRayDirection() const override {
-        return Direction();
+    virtual std::optional<Direction> GenerateRayDirection() const override {
+        if (_photonMap.IsEmpty()) return {};
+        return { Direction() };  // todo
     }
 
     private:
-    const PhotonMap& _photonMap;
-    const HitRecord& _hitRecord;
+    const PhotonMap&     _photonMap;
+    const HitRecord&     _hitRecord;
+    float                _alpha   = Pi / 12;
     static constexpr int QueryNum = 4;
 };
 

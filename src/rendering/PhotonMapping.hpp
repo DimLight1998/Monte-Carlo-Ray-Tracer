@@ -13,7 +13,7 @@
 
 #include "../bounded-volumn-hierarchy/Bvh.hpp"
 #include "../common/Typing.hpp"
-#include "../pdf/PhotonMappingPDF.hpp"
+#include "../common/Ray.hpp"
 
 struct PhotonCloud {
     struct PhotonPoint {
@@ -79,10 +79,6 @@ class PhotonMap {
         return _photonCloud.PhotonPoints.empty();
     }
 
-    [[nodiscard]] std::shared_ptr<PhotonMappingPDF> GetPDF(const HitRecord& hitRecord) const {
-        return std::make_shared<PhotonMappingPDF>(*this, hitRecord);
-    }
-
     private:
     using KDTreeType =
         nanoflann::KDTreeSingleIndexAdaptor<nanoflann::L2_Simple_Adaptor<float, PhotonCloud>, PhotonCloud, 3>;
@@ -113,7 +109,7 @@ void AppendPhotonMappingData(
         AppendPhotonMappingData(bvh, specularRay, maxDepth - 1, dataBuffer);
     } else if (scattered) {
         const auto scatterPDF   = scattered.value().GetPDF();
-        const auto direction    = scatterPDF->GenerateRayDirection();
+        const auto direction    = scatterPDF->GenerateRayDirection().value();
         const auto scatteredRay = Ray { hitRecord.GetLocation(), direction, ray.GetTimeEmitted() };
         AppendPhotonMappingData(bvh, scatteredRay, maxDepth - 1, dataBuffer);
     }
