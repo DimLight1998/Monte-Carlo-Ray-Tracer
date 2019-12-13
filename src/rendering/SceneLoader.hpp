@@ -7,6 +7,7 @@
 
 #include <fstream>
 #include <memory>
+#include <tuple>
 #include <vector>
 
 #include <json/json.hpp>
@@ -31,7 +32,10 @@ using json = nlohmann::json;
 
 class SceneLoader {
     public:
-    static std::pair<std::vector<std::shared_ptr<const Hitable>>, std::vector<std::shared_ptr<const Hitable>>>
+    static std::tuple<
+        std::vector<std::shared_ptr<const Hitable>>,
+        std::vector<std::shared_ptr<const Hitable>>,
+        std::vector<std::shared_ptr<const Hitable>>>
     LoadScene(const std::string& filePath) {
         std::ifstream t(filePath);
         json          content;
@@ -51,16 +55,20 @@ class SceneLoader {
 
         // build hitables
         std::vector<std::shared_ptr<const Hitable>> allHitables;
-        std::vector<std::shared_ptr<const Hitable>> importantHitables;
+        std::vector<std::shared_ptr<const Hitable>> mcImportantHitables;
+        std::vector<std::shared_ptr<const Hitable>> pmImportantHitables;
         for (const auto& hitableJson : content["hitables"]) {
-            const auto hitable = LoadHitable(materials, hitableJson);
-            allHitables.emplace_back(hitable.first);
-            if (hitable.second) {
-                importantHitables.emplace_back(hitable.first);
-            }
+            const auto  hitableInfo   = LoadHitable(materials, hitableJson);
+            const auto& hitable       = std::get<0>(hitableInfo);
+            const auto  isMCImportant = std::get<1>(hitableInfo);
+            const auto  isPMImportant = std::get<2>(hitableInfo);
+
+            allHitables.emplace_back(hitable);
+            if (isMCImportant) mcImportantHitables.emplace_back(hitable);
+            if (isPMImportant) pmImportantHitables.emplace_back(hitable);
         }
 
-        return { allHitables, importantHitables };
+        return { allHitables, mcImportantHitables, pmImportantHitables };
     }
 
     private:
@@ -113,17 +121,20 @@ class SceneLoader {
         throw std::runtime_error("unknown material type");
     }
 
-    static std::pair<std::shared_ptr<Hitable>, bool> LoadHitable(
+    static std::tuple<std::shared_ptr<Hitable>, bool, bool> LoadHitable(
         const std::unordered_map<std::string, std::shared_ptr<Material>>& materialMap,
         const json&                                                       hitableJson) {
         const std::string type         = hitableJson["type"];
         const std::string materialName = hitableJson["material"];
-        const bool        important    = hitableJson.value("important", false);
+        const bool        mcImportant  = hitableJson.value("mcImportant", false);
+        const bool        pmImportant  = hitableJson.value("pmImportant", false);
         const auto&       material     = materialMap.at(materialName);
         if (type == "sphere") {
             const auto& center = hitableJson["center"];
             const float radius = hitableJson["radius"];
-            return { std::make_shared<Sphere>(Location(center[0], center[1], center[2]), radius, material), important };
+            return { std::make_shared<Sphere>(Location(center[0], center[1], center[2]), radius, material),
+                     mcImportant,
+                     pmImportant };
         } else if (type == "movingSphere") {
             const auto& centerStart = hitableJson["centerStart"];
             const auto& centerEnd   = hitableJson["centerEnd"];
@@ -137,6 +148,7 @@ class SceneLoader {
                          movingStart,
                          movingEnd,
                          material),
+                     false,
                      false };
         } else if (type == "mesh") {
             const std::string objPath = hitableJson["objPath"];
@@ -144,7 +156,7 @@ class SceneLoader {
             for (const auto& transformation : hitableJson["transformations"]) {
                 LoadAndPerformTransformation(object, transformation);
             }
-            return { object, important };
+            return { object, mcImportant, pmImportant };
         } else if (type == "prefabs.cube") {
             const float x    = hitableJson["x"];
             const float y    = hitableJson["y"];
@@ -153,13 +165,13 @@ class SceneLoader {
             for (const auto& transformation : hitableJson["transformations"]) {
                 LoadAndPerformTransformation(cube, transformation);
             }
-            return { cube, important };
+            return { cube, mcImportant, pmImportant };
         } else if (type == "prefabs.rectangle") {
             const auto rectangle = std::make_shared<Rectangle>(hitableJson["height"], hitableJson["width"], material);
             for (const auto& transformation : hitableJson["transformations"]) {
                 LoadAndPerformTransformation(rectangle, transformation);
             }
-            return { rectangle, important };
+            return { rectangle, mcImportant, pmImportant };
         } else if (type == "prefabs.rectangle:xy+" || type == "prefabs.rectangle:xy-") {
             const float xMin         = hitableJson["xMin"];
             const float xMax         = hitableJson["xMax"];
@@ -172,7 +184,7 @@ class SceneLoader {
             for (const auto& transformation : hitableJson["transformations"]) {
                 LoadAndPerformTransformation(rectangle, transformation);
             }
-            return { rectangle, important };
+            return { rectangle, mcImportant, pmImportant };
         } else if (type == "prefabs.rectangle:+yz" || type == "prefabs.rectangle:-yz") {
             const float yMin         = hitableJson["yMin"];
             const float yMax         = hitableJson["yMax"];
@@ -185,7 +197,7 @@ class SceneLoader {
             for (const auto& transformation : hitableJson["transformations"]) {
                 LoadAndPerformTransformation(rectangle, transformation);
             }
-            return { rectangle, important };
+            return { rectangle, mcImportant, pmImportant };
         } else if (type == "prefabs.rectangle:x+z" || type == "prefabs.rectangle:x-z") {
             const float zMin         = hitableJson["zMin"];
             const float zMax         = hitableJson["zMax"];
@@ -198,13 +210,13 @@ class SceneLoader {
             for (const auto& transformation : hitableJson["transformations"]) {
                 LoadAndPerformTransformation(rectangle, transformation);
             }
-            return { rectangle, important };
+            return { rectangle, mcImportant, pmImportant };
         } else if (type == "smokeWrapper") {
-            const auto wrapped       = LoadHitable(materialMap, hitableJson["wrapping"]).first;
+            const auto wrapped       = std::get<0>(LoadHitable(materialMap, hitableJson["wrapping"]));
             const auto smokeMaterial = std::dynamic_pointer_cast<Smoke>(material);
             if (smokeMaterial == nullptr) throw std::runtime_error("smoke wrapper with material not being smoke");
             const auto smokeWrapper = std::make_shared<SmokeWrapper>(wrapped, smokeMaterial);
-            return { smokeWrapper, important };
+            return { smokeWrapper, mcImportant, pmImportant };
         }
         throw std::runtime_error("unknown hitable type");
     }

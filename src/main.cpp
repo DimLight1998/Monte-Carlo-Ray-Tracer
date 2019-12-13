@@ -7,22 +7,33 @@
 #include <opencv2/highgui.hpp>
 
 #include "rendering/ConfigLoader.hpp"
+#include "rendering/PhotonMapping.hpp"
 #include "rendering/RenderingEngine.hpp"
 #include "rendering/SceneLoader.hpp"
 
 using namespace std;
 
 int main() {
-    const auto  allAndImportantHitables = SceneLoader::LoadScene("../../data/testScene.json");
-    const auto  configAndCamera         = ConfigLoader::LoadConfig("../../data/testScene.json");
-    const auto  camera                  = configAndCamera.second;
-    const auto  width                   = configAndCamera.first.GetImageWidth();
-    const auto  height                  = configAndCamera.first.GetImageHeight();
-    const auto  maxDepth                = configAndCamera.first.GetRayMaxDepth();
-    const auto  numSamples              = configAndCamera.first.GetSamplesPerPixel();
-    const auto  skyColor                = configAndCamera.first.GetSkyColor();
-    const auto  bvh                     = BVH::BuildBVH(allAndImportantHitables.first);
-    const auto& importantHitables       = allAndImportantHitables.second;
+    const auto  hitablesInfo        = SceneLoader::LoadScene("../../data/testScene.json");
+    const auto  configAndCamera     = ConfigLoader::LoadConfig("../../data/testScene.json");
+    const auto  camera              = configAndCamera.second;
+    const auto  width               = configAndCamera.first.GetImageWidth();
+    const auto  height              = configAndCamera.first.GetImageHeight();
+    const auto  maxDepth            = configAndCamera.first.GetRayMaxDepth();
+    const auto  numSamples          = configAndCamera.first.GetSamplesPerPixel();
+    const auto  skyColor            = configAndCamera.first.GetSkyColor();
+    const auto  bvh                 = BVH::BuildBVH(get<0>(hitablesInfo));
+    const auto& mcImportantHitables = get<1>(hitablesInfo);
+    const auto& pmImportantHitables = get<2>(hitablesInfo);
+
+    PhotonMap photonMap;
+    for (auto i = 0; i < 10000; i++) {
+        // 1. random choose a light
+        // 2. random generate a ray
+        // 3. shoot the ray, until something lambertian is touched
+        // 4. record to photon map
+        // 5. build photon map
+    }
 
     auto data = std::vector<unsigned char>();
     data.reserve(height * width * 3);
@@ -32,12 +43,12 @@ int main() {
     for (auto n = 0; n < numSamples; n++) {
         for (auto i = 0; i < width; i++) {
 #pragma omp parallel for default(none) \
-    shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data, skyColor, importantHitables)
+    shared(maxDepth, height, width, i, n, camera, bvh, dataSum, data, skyColor, mcImportantHitables)
             for (auto j = 0; j < height; j++) {
                 const auto x     = RandomFloatBetween((i - 0.5f) / width, (i + 0.5f) / width);
                 const auto y     = RandomFloatBetween((j - 0.5f) / height, (j + 0.5f) / height);
                 Ray        ray   = camera.GetEmittedRay(x, y);
-                const auto color = RenderingEngine::GetRayColor(bvh, ray, maxDepth, skyColor, importantHitables);
+                const auto color = RenderingEngine::GetRayColor(bvh, ray, maxDepth, skyColor, mcImportantHitables);
                 const auto index = ((height - 1 - j) * width + i) * 3;
 
                 dataSum[index + 0] += color.b;
