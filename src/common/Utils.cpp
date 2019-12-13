@@ -5,6 +5,9 @@
 #include "Utils.hpp"
 
 float RandomFloatBetween(float a, float b) {
+    if (a > b) {
+        throw std::runtime_error("invalid arguments");
+    }
     static std::mt19937 generator(
         static_cast<unsigned long>(std::chrono::system_clock::now().time_since_epoch().count()));
     std::uniform_real_distribution<float> distribution(a, b);
@@ -12,6 +15,9 @@ float RandomFloatBetween(float a, float b) {
 }
 
 float RandomIntegerBetween(int a, int b) {
+    if (a > b) {
+        throw std::runtime_error("invalid arguments");
+    }
     static std::mt19937 generator(
         static_cast<unsigned long>(std::chrono::system_clock::now().time_since_epoch().count()));
     std::uniform_int_distribution<int> distribution(a, b);

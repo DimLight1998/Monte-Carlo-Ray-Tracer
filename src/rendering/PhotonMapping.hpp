@@ -70,6 +70,10 @@ class PhotonMap {
         return ret;
     }
 
+    [[nodiscard]] int GetCount() const {
+        return _photonCloud.PhotonPoints.size();
+    }
+
     private:
     using KDTreeType =
         nanoflann::KDTreeSingleIndexAdaptor<nanoflann::L2_Simple_Adaptor<float, PhotonCloud>, PhotonCloud, 3>;

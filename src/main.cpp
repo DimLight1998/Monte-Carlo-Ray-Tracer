@@ -32,7 +32,7 @@ int main() {
 #pragma omp parallel for default(none) shared(bvh, totalDataBuffer, pmImportantHitables)
     for (auto i = 0; i < 16; i++) {
         DataBuffer subDataBuffer;
-        for (auto j = 0; j < 16384; j++) {
+        for (auto j = 0; j < 200000; j++) {
             const auto ray = GetRandomRayFromPMHitables(pmImportantHitables);
             AppendPhotonMappingData(bvh, ray, 3, subDataBuffer);
         }
@@ -47,6 +47,7 @@ int main() {
         photonMap.Add(item.first, item.second);
     }
     photonMap.FreezeThenBuildTree();
+    cout << "photon map built with " << photonMap.GetCount() << " photons" << endl;
 
     auto data = std::vector<unsigned char>();
     data.reserve(height * width * 3);
