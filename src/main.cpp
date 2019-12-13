@@ -14,6 +14,12 @@
 using namespace std;
 
 int main() {
+    const auto         timeStart      = std::time(nullptr);
+    const auto         localTimeStart = *std::localtime(&timeStart);
+    std::ostringstream ossStart;
+    ossStart << std::put_time(&localTimeStart, "%Y-%m-%d-%H-%M-%S");
+    const auto timeStringStart = ossStart.str();
+
     const auto  hitablesInfo        = SceneLoader::LoadScene("../../data/testScene.json");
     const auto  configAndCamera     = ConfigLoader::LoadConfig("../../data/testScene.json");
     const auto  camera              = configAndCamera.second;
@@ -29,22 +35,24 @@ int main() {
     PhotonMap photonMap;
     using DataBuffer = std::vector<std::pair<Location, Direction>>;
     DataBuffer totalDataBuffer;
+    if (!pmImportantHitables.empty()) {
 #pragma omp parallel for default(none) shared(bvh, totalDataBuffer, pmImportantHitables)
-    for (auto i = 0; i < 16; i++) {
-        DataBuffer subDataBuffer;
-        for (auto j = 0; j < 200000; j++) {
-            const auto ray = GetRandomRayFromPMHitables(pmImportantHitables);
-            AppendPhotonMappingData(bvh, ray, 3, subDataBuffer);
-        }
+        for (auto i = 0; i < 16; i++) {
+            DataBuffer subDataBuffer;
+            for (auto j = 0; j < 200000; j++) {
+                const auto ray = GetRandomRayFromPMHitables(pmImportantHitables);
+                AppendPhotonMappingData(bvh, ray, 3, subDataBuffer);
+            }
 #pragma omp critical
-        {
-            for (const auto& item : subDataBuffer) {
-                totalDataBuffer.emplace_back(item);
+            {
+                for (const auto& item : subDataBuffer) {
+                    totalDataBuffer.emplace_back(item);
+                }
             }
         }
-    }
-    for (const auto& item : totalDataBuffer) {
-        photonMap.Add(item.first, item.second);
+        for (const auto& item : totalDataBuffer) {
+            photonMap.Add(item.first, item.second);
+        }
     }
     photonMap.FreezeThenBuildTree();
     cout << "photon map built with " << photonMap.GetCount() << " photons" << endl;
@@ -79,15 +87,17 @@ int main() {
         cv::imshow("display", mat);
         cv::waitKey(1);
         cout << (n + 1) << " samples finished" << endl;
-    }
 
-    const auto         t  = std::time(nullptr);
-    const auto         tm = *std::localtime(&t);
-    std::ostringstream oss;
-    oss << std::put_time(&tm, "%Y-%m-%d-%H-%M-%S");
-    const auto timeString = oss.str();
-    const auto mat        = cv::Mat(height, width, CV_8UC3, data.data());  // NOLINT(hicpp-signed-bitwise)
-    cv::imwrite(timeString + ".png", mat);
+        const auto         timeNow      = std::time(nullptr);
+        const auto         localTimeNow = *std::localtime(&timeNow);
+        std::ostringstream ossNow;
+        ossNow << std::put_time(&localTimeNow, "%Y-%m-%d-%H-%M-%S");
+        const auto timeStringNow = ossNow.str();
+
+        std::ostringstream title;
+        title << timeStringStart << "-" << to_string(n + 1) << "-" << timeStringNow << ".png";
+        cv::imwrite(title.str(), mat);
+    }
 
     cv::waitKey(0);
     return 0;
