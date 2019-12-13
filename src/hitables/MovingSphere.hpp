@@ -89,6 +89,10 @@ class MovingSphere: public Hitable {
         throw std::runtime_error("MC not support for moving objects");
     }
 
+    virtual Ray GenerateRandomRayForPM() const override {
+        throw std::runtime_error("PM not support for moving objects");
+    }
+
     private:
     Location                  _centerStart;
     Location                  _centerEnd;

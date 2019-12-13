@@ -41,6 +41,15 @@ glm::vec3 RandomPointInUnitSphere() {
     }
 }
 
+glm::vec3 RandomPointOnUnitSphere() {
+    while (true) {
+        const auto pointInUnitSphere = RandomPointInUnitSphere();
+        if (glm::length(pointInUnitSphere) > 0) {
+            return glm::normalize(pointInUnitSphere);
+        }
+    }
+}
+
 Direction RandomCosineDirection() {
     const auto r1  = RandomFloatBetween(0, 1);
     const auto r2  = RandomFloatBetween(0, 1);

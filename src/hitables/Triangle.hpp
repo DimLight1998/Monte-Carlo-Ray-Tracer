@@ -119,13 +119,7 @@ class Triangle: public Hitable {
     }
 
     virtual Direction GetRandomRayDirection(const Location& origin) const override {
-        auto x = RandomFloatBetween(Epsilon, 1 - Epsilon);
-        auto y = RandomFloatBetween(Epsilon, 1 - Epsilon);
-        if (x + y > 1) {
-            x = 1 - Epsilon - x;
-            y = 1 - Epsilon - y;
-        }
-        const auto point = x * _edge12 + y * _edge13 + _vertex1;
+        const auto point = RandomPointOnThisTriangle();
         return point - origin;
     }
 
@@ -140,6 +134,14 @@ class Triangle: public Hitable {
         } else {
             return 0;
         }
+    }
+
+    virtual Ray GenerateRandomRayForPM() const override {
+        const auto point     = RandomPointOnThisTriangle();
+        const auto direction = RandomPointOnUnitSphere();
+        // move a little to prevent float issue
+        const auto origin = point + Epsilon * direction;
+        return { origin, direction, 0 };
     }
 
     private:
@@ -157,6 +159,17 @@ class Triangle: public Hitable {
 
     Offset _edge12;
     Offset _edge13;
+
+    Location RandomPointOnThisTriangle() const {
+        auto x = RandomFloatBetween(Epsilon, 1 - Epsilon);
+        auto y = RandomFloatBetween(Epsilon, 1 - Epsilon);
+        if (x + y > 1) {
+            x = 1 - Epsilon - x;
+            y = 1 - Epsilon - y;
+        }
+        const auto point = x * _edge12 + y * _edge13 + _vertex1;
+        return point;
+    }
 };
 
 #endif  // MONTE_CARLO_RAY_TRACER_TRIANGLE_HPP

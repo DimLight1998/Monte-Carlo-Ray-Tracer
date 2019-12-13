@@ -49,6 +49,12 @@ glm::vec3 RandomPointOnUnitDisk();
  */
 glm::vec3 RandomPointInUnitSphere();
 
+/**
+ * @brief Get a random point on the unit sphere.
+ * @return A random point on the unit sphere.
+ */
+glm::vec3 RandomPointOnUnitSphere();
+
 Direction RandomCosineDirection();
 
 Direction RandomToSphere(float radius, float distanceSquared);

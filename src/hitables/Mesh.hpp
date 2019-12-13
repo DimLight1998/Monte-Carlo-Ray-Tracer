@@ -151,6 +151,11 @@ class Mesh: public Hitable {
         return sum / _triangles.size();
     }
 
+    virtual Ray GenerateRandomRayForPM() const override {
+        const auto index = RandomIntegerBetween(0, static_cast<int>(_triangles.size()) - 1);
+        return _triangles[index].GenerateRandomRayForPM();
+    }
+
     protected:
     std::vector<Triangle> _triangles;
     AlignedBox            _alignedBoxPrecomputed;

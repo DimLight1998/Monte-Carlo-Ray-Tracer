@@ -63,6 +63,10 @@ class SmokeWrapper: public Hitable {
         return Hitable::ToString();
     }
 
+    virtual Ray GenerateRandomRayForPM() const override {
+        return _hitable->GenerateRandomRayForPM();
+    }
+
     private:
     std::shared_ptr<const Hitable> _hitable;
     std::unique_ptr<BVH>           _hitableBVH;

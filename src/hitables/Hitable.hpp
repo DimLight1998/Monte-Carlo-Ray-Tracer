@@ -34,6 +34,8 @@ class Hitable: public std::enable_shared_from_this<Hitable> {
 
     [[nodiscard]] virtual float GetRayPDF(const Location& origin, const Direction& direction) const = 0;
 
+    [[nodiscard]] virtual Ray GenerateRandomRayForPM() const = 0;
+
     virtual std::string ToString() const {
         return "hitable";
     };

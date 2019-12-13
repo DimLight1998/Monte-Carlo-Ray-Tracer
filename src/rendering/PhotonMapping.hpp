@@ -45,8 +45,8 @@ struct PhotonCloud {
 
 class PhotonMap {
     public:
-    void Add(float x, float y, float z, const Direction& toLightSource) {
-        _photonCloud.PhotonPoints.emplace_back(x, y, z, toLightSource);
+    void Add(const Location& location, const Direction& toLightSource) {
+        _photonCloud.PhotonPoints.emplace_back(location.x, location.y, location.z, toLightSource);
     }
 
     void FreezeThenBuildTree() {
@@ -78,8 +78,32 @@ class PhotonMap {
     std::unique_ptr<KDTreeType> _kdTree;
 };
 
-void UpdatePhotonMap(const std::unique_ptr<BVH>& bvh, const Ray& ray, int maxDepth) {
-    // todo
+Ray GetRandomRayFromPMHitables(const std::vector<std::shared_ptr<const Hitable>>& pmImportantHitables) {
+    const auto size  = static_cast<int>(pmImportantHitables.size());
+    const auto index = RandomIntegerBetween(0, size - 1);
+    return pmImportantHitables[index]->GenerateRandomRayForPM();
+}
+
+void AppendPhotonMappingData(
+    const std::unique_ptr<BVH>&                  bvh,
+    const Ray&                                   ray,
+    int                                          maxDepth,
+    std::vector<std::pair<Location, Direction>>& dataBuffer) {
+    if (maxDepth == 0) return;
+    const auto hitResult = bvh->HitBy(ray, Epsilon, PosInfinity);
+    if (!hitResult) return;
+    const auto& hitRecord = hitResult.value();
+    dataBuffer.emplace_back(hitRecord.GetLocation(), -glm::normalize(ray.GetDirection()));
+    const auto scattered = hitRecord.GetMaterial().Scattered(ray, hitRecord);
+    if (scattered && scattered.value().GetMaybeSpecularRay()) {
+        const auto& specularRay = scattered.value().GetMaybeSpecularRay().value();
+        AppendPhotonMappingData(bvh, specularRay, maxDepth - 1, dataBuffer);
+    } else if (scattered) {
+        const auto scatterPDF   = scattered.value().GetPDF();
+        const auto direction    = scatterPDF->GenerateRayDirection();
+        const auto scatteredRay = Ray { hitRecord.GetLocation(), direction, ray.GetTimeEmitted() };
+        AppendPhotonMappingData(bvh, scatteredRay, maxDepth - 1, dataBuffer);
+    }
 }
 
 #endif  //MONTECARLORAYTRACER_PHOTONMAPPING_HPP

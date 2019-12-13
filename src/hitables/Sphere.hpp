@@ -92,6 +92,12 @@ class Sphere: public Hitable {
         return ss.str();
     }
 
+    virtual Ray GenerateRandomRayForPM() const override {
+        const auto direction = RandomPointOnUnitSphere();
+        const auto origin    = _center + (_radius + Epsilon) * direction;
+        return { origin, direction, 0 };
+    }
+
     private:
     const Location                  _center;
     const float                     _radius;

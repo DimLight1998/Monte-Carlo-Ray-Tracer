@@ -27,13 +27,26 @@ int main() {
     const auto& pmImportantHitables = get<2>(hitablesInfo);
 
     PhotonMap photonMap;
-    for (auto i = 0; i < 10000; i++) {
-        // 1. random choose a light
-        // 2. random generate a ray
-        // 3. shoot the ray, until something lambertian is touched
-        // 4. record to photon map
-        // 5. build photon map
+    using DataBuffer = std::vector<std::pair<Location, Direction>>;
+    DataBuffer totalDataBuffer;
+#pragma omp parallel for default(none) shared(bvh, totalDataBuffer, pmImportantHitables)
+    for (auto i = 0; i < 16; i++) {
+        DataBuffer subDataBuffer;
+        for (auto j = 0; j < 16384; j++) {
+            const auto ray = GetRandomRayFromPMHitables(pmImportantHitables);
+            AppendPhotonMappingData(bvh, ray, 3, subDataBuffer);
+        }
+#pragma omp critical
+        {
+            for (const auto& item : subDataBuffer) {
+                totalDataBuffer.emplace_back(item);
+            }
+        }
     }
+    for (const auto& item : totalDataBuffer) {
+        photonMap.Add(item.first, item.second);
+    }
+    photonMap.FreezeThenBuildTree();
 
     auto data = std::vector<unsigned char>();
     data.reserve(height * width * 3);
