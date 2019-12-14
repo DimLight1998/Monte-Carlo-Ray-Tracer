@@ -66,7 +66,7 @@ class PhotonMap {
         _kdTree->findNeighbors(resultSet, query, nanoflann::SearchParams(10));
         for (auto i = 0; i < resultSet.size(); i++) {
             const auto index = indices[i];
-            ret.emplace_back(_photonCloud.PhotonPoints[i].ToLightSource, distancesSquared[i]);
+            ret.emplace_back(_photonCloud.PhotonPoints[index].ToLightSource, distancesSquared[i]);
         }
         return ret;
     }
@@ -107,11 +107,6 @@ void AppendPhotonMappingData(
     if (scattered && scattered.value().GetMaybeSpecularRay()) {
         const auto& specularRay = scattered.value().GetMaybeSpecularRay().value();
         AppendPhotonMappingData(bvh, specularRay, maxDepth - 1, dataBuffer);
-    } else if (scattered) {
-        const auto scatterPDF   = scattered.value().GetPDF();
-        const auto direction    = scatterPDF->GenerateRayDirection();
-        const auto scatteredRay = Ray { hitRecord.GetLocation(), direction, ray.GetTimeEmitted() };
-        AppendPhotonMappingData(bvh, scatteredRay, maxDepth - 1, dataBuffer);
     }
 }
 

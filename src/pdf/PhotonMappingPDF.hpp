@@ -20,14 +20,15 @@ class PhotonMappingPDF: public PDF {
         if (queryResult.empty() || queryResult[0].second > MaxDSAllowed) {
             _direction = normal;
         } else {
-            glm::vec3 sum   = { 0.0f, 0.0f, 0.0f };
-            auto      count = 0;
+            glm::vec3 directionSum = { 0.0f, 0.0f, 0.0f };
+            auto      weightSum    = 0.0f;
             for (const auto& entry : queryResult) {
                 if (entry.second > MaxDSAllowed) break;
-                sum += entry.first;
-                count++;
+                const auto weight = 1 / entry.second;
+                directionSum += entry.first * weight;
+                weightSum += weight;
             }
-            _direction = glm::normalize(sum / (static_cast<float>(count)));
+            _direction = glm::normalize(directionSum / weightSum);
         }
     }
 
@@ -56,8 +57,8 @@ class PhotonMappingPDF: public PDF {
     static constexpr float Alpha        = Pi / 12;
     static constexpr float PDFValue     = Pi * Alpha * Alpha;
     static constexpr float Threshold    = 0.965926;
-    static constexpr int   QueryNum     = 6;
-    static constexpr float MaxDSAllowed = 16;
+    static constexpr int   QueryNum     = 8;
+    static constexpr float MaxDSAllowed = 8;
 };
 
 #endif  //MONTECARLORAYTRACER_PHOTONMAPPINGPDF_HPP
