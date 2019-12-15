@@ -17,6 +17,7 @@
 #include "../hitables/MovingSphere.hpp"
 #include "../hitables/SmokeWrapper.hpp"
 #include "../hitables/Sphere.hpp"
+#include "../hitables/bezier/BezierMesh.hpp"
 #include "../hitables/prefabs/Cube.hpp"
 #include "../hitables/prefabs/Rectangle.hpp"
 #include "../materials/Glass.hpp"
@@ -157,6 +158,27 @@ class SceneLoader {
                 LoadAndPerformTransformation(object, transformation);
             }
             return { object, mcImportant, pmImportant };
+        } else if (type == "bezier") {
+            const auto  data  = hitableJson["data"];
+            const float error = hitableJson["error"];
+
+            std::vector<std::vector<std::vector<glm::vec3>>> controlData;
+            for (const auto& surface : data) {
+                std::vector<std::vector<glm::vec3>> surfaceData;
+                for (const auto& row : surface) {
+                    std::vector<glm::vec3> rowData;
+                    for (const auto& point : row) {
+                        rowData.emplace_back(glm::vec3 { point[0], point[1], point[2] });
+                    }
+                    surfaceData.emplace_back(rowData);
+                }
+                controlData.emplace_back(surfaceData);
+            }
+            const auto bezier = std::make_shared<BezierMesh>(controlData, material, error);
+            for (const auto& transformation : hitableJson["transformations"]) {
+                LoadAndPerformTransformation(bezier, transformation);
+            }
+            return { bezier, mcImportant, pmImportant };
         } else if (type == "prefabs.cube") {
             const float x    = hitableJson["x"];
             const float y    = hitableJson["y"];
