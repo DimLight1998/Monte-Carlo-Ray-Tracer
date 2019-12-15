@@ -5,6 +5,8 @@
 #ifndef MONTECARLORAYTRACER_BEZIERMESH_HPP
 #define MONTECARLORAYTRACER_BEZIERMESH_HPP
 
+#include <iostream>
+
 #include "../Mesh.hpp"
 #include "Bezier.hpp"
 
@@ -17,6 +19,7 @@ class BezierMesh: public Mesh {
         Bezier bezier(patchesData);
         bezier.ApplyAdaptiveSubdivision(error);
         _triangles = std::move(bezier.ToTriangles(material));
+        std::cout << _triangles.size() << " triangles of the bezier object generated." << std::endl;
         RebuildAlignedBox();
     }
 };

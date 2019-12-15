@@ -59,15 +59,16 @@ class BezierPatch {
     glm::vec3 CalculateUVPoints(float u, float v) {
         const auto uVec = glm::vec4 { std::pow(u, 3), std::pow(u, 2), u, 1 };
         const auto vVec = glm::vec4 { std::pow(v, 3), std::pow(v, 2), v, 1 };
-        const auto mat  = glm::mat4x4 { { -1, 3, -3, 1 }, { 3, -5, 3, 0 }, { -3, 3, 0, 0 }, { 1, 0, 0, 0 } };
+        const auto mat  = glm::mat4x4 { { -1, 3, -3, 1 }, { 3, -6, 3, 0 }, { -3, 3, 0, 0 }, { 1, 0, 0, 0 } };
         const auto matT = glm::transpose(mat);
 
         const auto controlXs = GetControlPointsOfDimension(0);
         const auto controlYs = GetControlPointsOfDimension(1);
         const auto controlZs = GetControlPointsOfDimension(2);
-        const auto x         = glm::dot(uVec * mat * controlXs * matT, vVec);
-        const auto y         = glm::dot(uVec * mat * controlYs * matT, vVec);
-        const auto z         = glm::dot(uVec * mat * controlZs * matT, vVec);
+
+        const auto x = glm::dot(uVec * matT * glm::transpose(controlXs) * mat, vVec);
+        const auto y = glm::dot(uVec * matT * glm::transpose(controlYs) * mat, vVec);
+        const auto z = glm::dot(uVec * matT * glm::transpose(controlZs) * mat, vVec);
         return { x, y, z };
     }
 
@@ -76,12 +77,12 @@ class BezierPatch {
         const auto pU = CalculateUVPoints(u + delta, v);
         const auto pV = CalculateUVPoints(u, v + delta);
         const auto n  = glm::cross(pU - p, pV - p);
-        return (glm::length(n) <= Epsilon) ? CalculateUVNormal(u + delta, v + delta, Epsilon) : n;
+        return (glm::length(n) == 0) ? CalculateUVNormal(u + delta, v + delta, Epsilon) : n;
     }
 
-    glm::mat4 GetControlPointsOfDimension(int dimension) {
+    glm::mat4x4 GetControlPointsOfDimension(int dimension) {
         const auto& p = _controlPoints;
-        glm::mat4   ret;
+        glm::mat4x4 ret;
         switch (dimension) {
         case 0:
             for (auto i = 0; i < 4; i++) {
@@ -147,10 +148,11 @@ class BezierPatch {
                                                CalculateUVNormal(vt2.x, vt2.y, Epsilon) };
             _adaptiveNormals.emplace_back(normals);
             _adaptivePoints.emplace_back(vertices);
+            return;
         } else if (okCount == 2) {
             if (!ok01) {
                 triangleVertices.assign({ { vt0, ref01, vt2 }, { vt2, ref01, vt1 } });
-                triangleUVs.assign({ { uv0, mid01, uv2 }, { uv2, ref01, uv1 } });
+                triangleUVs.assign({ { uv0, mid01, uv2 }, { uv2, mid01, uv1 } });
             } else if (!ok12) {
                 triangleVertices.assign({ { ref12, vt0, vt1 }, { vt0, ref12, vt2 } });
                 triangleUVs.assign({ { mid12, uv0, uv1 }, { uv0, mid12, uv2 } });
