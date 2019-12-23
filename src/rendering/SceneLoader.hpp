@@ -84,8 +84,39 @@ class SceneLoader {
             const std::string imagePath = textureJson["imagePath"];
             return { name, std::make_shared<DiffuseMapping>(imagePath) };
         } else if (type == "perlinNoise") {
-            const float scale = textureJson["scale"];
-            return { name, std::make_shared<PerlinNoise>(scale) };
+            const float scale           = textureJson["scale"];
+            const float depth           = textureJson["depth"];
+            const float sinTurbCoeff    = textureJson["sinTurbCoeff"];
+            const float sinOffset       = textureJson["sinOffset"];
+            const float sinXCoeff       = textureJson["sinXCoeff"];
+            const float sinYCoeff       = textureJson["sinYCoeff"];
+            const float sinZCoeff       = textureJson["sinZCoeff"];
+            const float sinXYCoeff      = textureJson["sinXYCoeff"];
+            const float sinYZCoeff      = textureJson["sinYZCoeff"];
+            const float sinZXCoeff      = textureJson["sinZXCoeff"];
+            const float sinXYZCoeff     = textureJson["sinXYZCoeff"];
+            const float sinCoeff        = textureJson["sinCoeff"];
+            const float linearTurbCoeff = textureJson["linearTurbCoeff"];
+            const float linearOffset    = textureJson["linearOffset"];
+            const auto& color           = textureJson["color"];
+            return {
+                name, std::make_shared<PerlinNoise>(
+                          scale,
+                          depth,
+                          sinTurbCoeff,
+                          sinOffset,
+                          sinXCoeff,
+                          sinYCoeff,
+                          sinZCoeff,
+                          sinXYCoeff,
+                          sinYZCoeff,
+                          sinZXCoeff,
+                          sinXYZCoeff,
+                          sinCoeff,
+                          linearTurbCoeff,
+                          linearOffset,
+                          Color { color[0], color[1], color[2] })
+            };
         }
         throw std::runtime_error("unknown texture type");
     }

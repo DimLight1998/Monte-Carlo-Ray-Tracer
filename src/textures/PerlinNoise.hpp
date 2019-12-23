@@ -13,7 +13,37 @@
 
 class PerlinNoise: public Texture {
     public:
-    PerlinNoise(float scale): _scale { scale } {
+    PerlinNoise(
+        float        scale,
+        int          depth,
+        float        sinTurbCoeff,
+        float        sinOffset,
+        float        sinXCoeff,
+        float        sinYCoeff,
+        float        sinZCoeff,
+        float        sinXYCoeff,
+        float        sinYZCoeff,
+        float        sinZXCoeff,
+        float        sinXYZCoeff,
+        float        sinCoeff,
+        float        linearTurbCoeff,
+        float        linearOffset,
+        const Color& color)
+        : _scale { scale },
+          _depth { depth },
+          _sinTurbCoeff { sinTurbCoeff },
+          _sinOffset { sinOffset },
+          _sinXCoeff { sinXCoeff },
+          _sinYCoeff { sinYCoeff },
+          _sinZCoeff { sinZCoeff },
+          _sinXYCoeff { sinXYCoeff },
+          _sinYZCoeff { sinYZCoeff },
+          _sinZXCoeff { sinZXCoeff },
+          _sinXYZCoeff { sinXYZCoeff },
+          _sinCoeff { sinCoeff },
+          _linearTurbCoeff { linearTurbCoeff },
+          _linearOffset { linearOffset },
+          _color { color } {
         _randVecs.clear();
         for (auto i = 0; i < NumElements; i++) {
             _randVecs.emplace_back(glm::normalize(
@@ -31,15 +61,48 @@ class PerlinNoise: public Texture {
     }
 
     [[nodiscard]] Color GetTextureColorAt(const UVCoordinate& uv, const Location& location) const override {
-        // todo let user config parameters of the texture
-        const auto color = Color { 1, 1, 1 } * Turb(_scale * location, 6);
+        const auto xD   = [=]() { return _scale * location.x; };
+        const auto yD   = [=]() { return _scale * location.y; };
+        const auto zD   = [=]() { return _scale * location.z; };
+        const auto xyD  = [=]() { return _scale * glm::sqrt(location.x * location.x + location.y * location.y); };
+        const auto yzD  = [=]() { return _scale * glm::sqrt(location.y * location.y + location.z * location.z); };
+        const auto zxD  = [=]() { return _scale * glm::sqrt(location.z * location.z + location.x * location.x); };
+        const auto xyzD = [=]() { return _scale * glm::length(location); };
+
+        const auto turb     = Turb(_scale * location, _depth);
+        auto       sinValue = 0.0f;
+        sinValue += _sinTurbCoeff * turb;
+        sinValue += _sinOffset;
+        const auto sinComps = std::vector<std::pair<float, std::function<float(void)>>> {
+            { _sinXCoeff, xD },   { _sinYCoeff, yD },   { _sinZCoeff, zD },    { _sinXYCoeff, xyD },
+            { _sinYZCoeff, yzD }, { _sinZXCoeff, zxD }, { _sinXYZCoeff, xyzD }
+        };
+        for (const auto& tp : sinComps) {
+            sinValue += tp.first == 0 ? 0 : tp.first * tp.second();
+        }
+        const auto final = _sinCoeff * std::sin(sinValue) + _linearTurbCoeff * turb + _linearOffset;
+        const auto color = _color * final;
         return { std::clamp(color.x, 0.0f, 1.0f), std::clamp(color.y, 0.0f, 1.0f), std::clamp(color.z, 0.0f, 1.0f) };
     }
 
     private:
     static constexpr unsigned NumElements = 256;
     static constexpr unsigned NEM1        = NumElements - 1;
-    float                     _scale;
+    const float               _scale;
+    const int                 _depth;
+    const float               _sinTurbCoeff;
+    const float               _sinOffset;
+    const float               _sinXCoeff;
+    const float               _sinYCoeff;
+    const float               _sinZCoeff;
+    const float               _sinXYCoeff;
+    const float               _sinYZCoeff;
+    const float               _sinZXCoeff;
+    const float               _sinXYZCoeff;
+    const float               _sinCoeff;
+    const float               _linearTurbCoeff;
+    const float               _linearOffset;
+    const Color               _color;
     std::vector<glm::vec3>    _randVecs;
     std::vector<unsigned>     _permX;
     std::vector<unsigned>     _permY;
